@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">questBoard</string>
+
+    <string-array name="valid_ids">
+        <item>Philippine Passport</item>
+        <item>Driver’s License</item>
+        <item>UMID</item>
+        <item>PhilHealth ID</item>
+        <item>Postal ID</item>
+        <item>National ID</item>
+        <item>School ID</item>
+        <item>PRC License</item>
+        <item>SSS ID</item>
+        <item>TIN ID</item>
+    </string-array>
+
 </resources>
