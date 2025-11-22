@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1A1A18"
+    android:padding="25dp"
+    android:gravity="center_horizontal">
+
+    <!-- BACK BUTTON -->
+    <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_back"
+        android:layout_gravity="start"
+        android:layout_marginBottom="25dp"/>
+
+    <!-- TITLE -->
+    <TextView
+        android:id="@+id/tvEmailOtpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Verification"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="6dp"/>
+
+    <!-- SUBTITLE -->
+    <TextView
+        android:id="@+id/tvEmailOtpSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter the 6-digit code we sent to your email"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp"
+        android:layout_marginBottom="30dp"
+        android:textAlignment="center"/>
+
+    <!-- OTP INPUT FIELD -->
+    <EditText
+        android:id="@+id/etEmailOtp"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:background="@drawable/input_field"
+        android:inputType="number"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:maxLength="6"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#777777"
+        android:padding="10dp"
+        android:layout_marginBottom="25dp"
+        android:letterSpacing="0.3"/>
+
+    <!-- RESEND OTP -->
+    <TextView
+        android:id="@+id/tvResendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend code"
+        android:textColor="#CC7722"
+        android:textSize="14sp"
+        android:layout_marginBottom="30dp"
+        android:textStyle="bold"/>
+
+    <!-- VERIFY BUTTON -->
+    <Button
+        android:id="@+id/btnVerifyOtp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Verify"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_button"/>
+</LinearLayout>

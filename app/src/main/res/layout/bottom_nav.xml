@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="#0F0F0F"
+    android:padding="10dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="65dp">
+
+    <ImageView
+        android:id="@+id/navHome"
+        android:src="@drawable/ic_home"
+        android:tint="#FFFFFF"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/navJobs"
+        android:src="@drawable/ic_work"
+        android:tint="#FFFFFF"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/navCommunity"
+        android:src="@drawable/ic_people"
+        android:tint="#FFFFFF"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/navMessages"
+        android:src="@drawable/ic_chat"
+        android:tint="#FFFFFF"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"/>
+
+    <ImageView
+        android:id="@+id/navProfile"
+        android:src="@drawable/ic_person"
+        android:tint="#FFFFFF"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
