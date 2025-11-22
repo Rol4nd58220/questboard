@@ -14,4 +14,27 @@
         <item>TIN ID</item>
     </string-array>
 
+    <!-- Employer Dashboard -->
+    <string name="overview">Overview</string>
+    <string name="total_jobs_posted">Total Jobs Posted</string>
+    <string name="active_jobs">Active Jobs</string>
+    <string name="pending_applicants">Pending\nApplicants</string>
+    <string name="completed_jobs">Completed Jobs</string>
+    <string name="view_all_job_posts">View All Job Posts</string>
+    <string name="active_job_posts">Active Job Posts</string>
+    <string name="view_applicants">View Applicants</string>
+    <string name="posted_time">Posted: %s</string>
+    <string name="job_status">Status: %s | Applicants: %d</string>
+
+    <!-- Bottom Navigation -->
+    <string name="my_jobs">My Jobs</string>
+    <string name="applicants">Applicants</string>
+    <string name="post_job">Post Job</string>
+    <string name="messages">Messages</string>
+    <string name="profile">Profile</string>
+
+    <!-- Accessibility -->
+    <string name="menu">Menu</string>
+    <string name="notifications">Notifications</string>
+
 </resources>
