@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A1A18">
+
+    <!-- SCROLLABLE CONTENT -->
+    <ScrollView
+        android:id="@+id/scrollJobDetails"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Back -->
+            <ImageView
+                android:id="@+id/btnBack"
+                android:src="@drawable/ic_back"
+                android:tint="#FFFFFF"
+                android:layout_width="28dp"
+                android:layout_height="28dp"/>
+
+            <!-- Title Center -->
+            <TextView
+                android:id="@+id/txtHeader"
+                android:text="Quest Details"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
+            <!-- Job Title -->
+            <TextView
+                android:id="@+id/txtJobTitle"
+                android:text="Event Setup Crew Member"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"/>
+
+            <!-- Image -->
+            <ImageView
+                android:id="@+id/imgBanner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="12dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/rounded_card"
+                android:src="@drawable/sample_job_image"/>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_marginTop="15dp"
+                android:textColor="#DDDDDD"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:text="A local event organizer is in need of reliable crew members to assist with setting up equipment, chairs, booths, and decorations for an upcoming corporate event..."/>
+
+            <!-- SECTION - COMPENSATION -->
+            <TextView
+                android:text="Compensation"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="25dp"/>
+
+            <!-- Payment Row -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:text="Payment"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtPayment"
+                    android:text="₱700 (Fixed Rate)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"/>
+            </LinearLayout>
+
+            <!-- Bonus Row -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:text="Bonus (Optional)"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/txtBonus"
+                    android:text="Completion Bonus: ₱500"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"/>
+            </LinearLayout>
+
+            <!-- SECTION - REQUIREMENTS -->
+            <TextView
+                android:text="Requirements"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="25dp"/>
+
+            <!-- Minimum Age Row -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:text="Minimum Age"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/txtAge"
+                    android:text="18 years old"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <!-- Skills Row -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:text="Skills"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/txtSkills"
+                    android:text="Physical Labor, Teamwork, Time Management"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <!-- Availability -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:text="Availability"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"/>
+
+                <TextView
+                    android:id="@+id/txtAvailability"
+                    android:text="October 05, 2025"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <!-- Bottom Spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- ACCEPT JOB BUTTON -->
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#1A1A18"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnAcceptJob"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Accept Job"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/orange_button"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
