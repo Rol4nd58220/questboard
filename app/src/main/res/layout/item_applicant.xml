@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/background_dark"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header Section with Photo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Left Section: Info -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Applied Time -->
+                <TextView
+                    android:id="@+id/tvAppliedTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Applied on 2 days ago"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_tertiary"
+                    tools:ignore="HardcodedText"/>
+
+                <!-- Applicant Name -->
+                <TextView
+                    android:id="@+id/tvApplicantName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Anya Petrova"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    tools:ignore="HardcodedText"/>
+
+                <!-- Job Title -->
+                <TextView
+                    android:id="@+id/tvJobTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Event Setup Crew"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary"
+                    tools:ignore="HardcodedText"/>
+
+                <!-- Shortlist Button -->
+                <Button
+                    android:id="@+id/btnShortlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/shortlist"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp"
+                    android:background="@drawable/button_shortlist"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:drawableEnd="@drawable/ic_bookmark_outline"
+                    android:drawablePadding="8dp"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <!-- Right Section: Photo -->
+            <ImageView
+                android:id="@+id/ivApplicantPhoto"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="12dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/rounded_card"
+                android:contentDescription="@string/applicant_photo"
+                tools:src="@tools:sample/avatars"/>
+
+        </LinearLayout>
+
+        <!-- Skills Chips -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupSkills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Planning"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                app:chipBackgroundColor="@color/card_background"
+                app:chipStrokeWidth="0dp"
+                tools:ignore="HardcodedText"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teamwork"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                app:chipBackgroundColor="@color/card_background"
+                app:chipStrokeWidth="0dp"
+                tools:ignore="HardcodedText"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Problem Solving"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                app:chipBackgroundColor="@color/card_background"
+                app:chipStrokeWidth="0dp"
+                tools:ignore="HardcodedText"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Distance -->
+        <TextView
+            android:id="@+id/tvDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="1.2 miles away"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            tools:ignore="HardcodedText"/>
+
+        <!-- Rating Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <!-- Left: Rating and Stars -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Rating Number -->
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.8"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    tools:ignore="HardcodedText"/>
+
+                <!-- Stars -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_star_filled"
+                        android:contentDescription="@string/star"
+                        app:tint="@color/accent_orange"/>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/ic_star_filled"
+                        android:contentDescription="@string/star"
+                        app:tint="@color/accent_orange"/>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/ic_star_filled"
+                        android:contentDescription="@string/star"
+                        app:tint="@color/accent_orange"/>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/ic_star_filled"
+                        android:contentDescription="@string/star"
+                        app:tint="@color/accent_orange"/>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="2dp"
+                        android:src="@drawable/ic_star_outline"
+                        android:contentDescription="@string/star"
+                        app:tint="@color/text_tertiary"/>
+
+                </LinearLayout>
+
+                <!-- Review Count -->
+                <TextView
+                    android:id="@+id/tvReviewCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="12 reviews"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    tools:ignore="HardcodedText"/>
+
+                <!-- View Rates Link -->
+                <TextView
+                    android:id="@+id/tvViewRates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/view_rates"
+                    android:textSize="12sp"
+                    android:textColor="@color/accent_orange"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Right: Rating Breakdown -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="24dp"
+                android:orientation="vertical">
+
+                <!-- 5 Stars -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="12dp"
+                        tools:ignore="HardcodedText"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar5"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:progress="75"
+                        android:progressDrawable="@drawable/rating_progress_bar"/>
+
+                    <TextView
+                        android:id="@+id/tvPercent5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="75%"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="32dp"
+                        tools:ignore="HardcodedText"/>
+
+                </LinearLayout>
+
+                <!-- 4 Stars -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="12dp"
+                        tools:ignore="HardcodedText"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar4"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:progress="13"
+                        android:progressDrawable="@drawable/rating_progress_bar"/>
+
+                    <TextView
+                        android:id="@+id/tvPercent4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="13%"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="32dp"
+                        tools:ignore="HardcodedText"/>
+
+                </LinearLayout>
+
+                <!-- 3 Stars -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="12dp"
+                        tools:ignore="HardcodedText"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar3"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:progress="5"
+                        android:progressDrawable="@drawable/rating_progress_bar"/>
+
+                    <TextView
+                        android:id="@+id/tvPercent3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5%"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="32dp"
+                        tools:ignore="HardcodedText"/>
+
+                </LinearLayout>
+
+                <!-- 2 Stars -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="12dp"
+                        tools:ignore="HardcodedText"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar2"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:progress="3"
+                        android:progressDrawable="@drawable/rating_progress_bar"/>
+
+                    <TextView
+                        android:id="@+id/tvPercent2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3%"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="32dp"
+                        tools:ignore="HardcodedText"/>
+
+                </LinearLayout>
+
+                <!-- 1 Star -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="12dp"
+                        tools:ignore="HardcodedText"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar1"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:progress="2"
+                        android:progressDrawable="@drawable/rating_progress_bar"/>
+
+                    <TextView
+                        android:id="@+id/tvPercent1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2%"
+                        android:textSize="11sp"
+                        android:textColor="@color/text_secondary"
+                        android:minWidth="32dp"
+                        tools:ignore="HardcodedText"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Bio/Description -->
+        <TextView
+            android:id="@+id/tvBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="I have 3 years of experience in event setup and coordination. I am reliable, detail-oriented, and work well under pressure."
+            android:textSize="13sp"
+            android:textColor="@color/text_secondary"
+            android:lineSpacingMultiplier="1.3"
+            tools:ignore="HardcodedText"/>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnView"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="@string/view"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:background="@drawable/button_view_applicants"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btnReject"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/reject"
+                android:textColor="@color/background_dark"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/button_reject"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/divider"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+

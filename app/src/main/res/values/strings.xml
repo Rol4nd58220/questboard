@@ -36,5 +36,18 @@
     <!-- Accessibility -->
     <string name="menu">Menu</string>
     <string name="notifications">Notifications</string>
+    <string name="back">Back</string>
+    <string name="star">Star</string>
+    <string name="applicant_photo">Applicant Photo</string>
+
+    <!-- Applicants Screen -->
+    <string name="applicants_for_job">Applicants for "%1$s" (%2$d)</string>
+    <string name="search_applicants">Search applicants</string>
+    <string name="most_recent">Most Recent</string>
+    <string name="highest_rated">Highest Rated</string>
+    <string name="shortlist">Shortlist</string>
+    <string name="view">View</string>
+    <string name="reject">Reject</string>
+    <string name="view_rates">View rates</string>
 
 </resources>
