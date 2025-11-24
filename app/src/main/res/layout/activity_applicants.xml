@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:paddingBottom="80dp"
         android:clipToPadding="false">
 
@@ -25,115 +26,80 @@
                 android:padding="16dp">
 
                 <ImageView
-                    android:id="@+id/btnBack"
+                    android:id="@+id/btnMenu"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_back"
-                    android:contentDescription="@string/back"
+                    android:src="@drawable/ic_menu"
+                    android:contentDescription="@string/menu"
                     app:tint="@color/text_primary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <TextView
-                    android:id="@+id/tvTitle"
+                <LinearLayout
+                    android:id="@+id/logoLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/applicants"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"
+                    android:orientation="horizontal"
+                    android:gravity="center"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quest"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/board"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent_orange"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/btnNotification"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_bell"
+                    android:contentDescription="@string/notifications"
+                    app:tint="@color/text_primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Job Title Section -->
+            <!-- Job Applicants Title -->
             <TextView
-                android:id="@+id/tvApplicantsForJob"
+                android:id="@+id/tvJobApplicantsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/applicants_for_job"
-                android:textSize="20sp"
+                android:layout_marginTop="16dp"
+                android:text="@string/job_applicants"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"/>
 
-            <!-- Search Bar -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/card_background"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp">
-
-                <EditText
-                    android:id="@+id/etSearchApplicants"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/search_applicants"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_tertiary"
-                    android:textSize="14sp"
-                    android:padding="14dp"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="12dp"
-                    android:background="@android:color/transparent"
-                    android:drawableTint="@color/text_tertiary"
-                    android:importantForAutofill="no"
-                    android:inputType="text"/>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- Filter Chips -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipMostRecent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/most_recent"
-                    android:textColor="@color/text_primary"
-                    android:checkable="true"
-                    android:checked="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    app:chipBackgroundColor="@color/chip_background_selector"
-                    app:chipStrokeWidth="0dp"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipHighestRated"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/highest_rated"
-                    android:textColor="@color/text_primary"
-                    android:checkable="true"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
-                    app:chipBackgroundColor="@color/chip_background_selector"
-                    app:chipStrokeWidth="0dp"/>
-
-            </LinearLayout>
-
-            <!-- Applicants List -->
+            <!-- Job Posts List -->
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvApplicants"
+                android:id="@+id/rvJobPosts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:nestedScrollingEnabled="false"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         </LinearLayout>

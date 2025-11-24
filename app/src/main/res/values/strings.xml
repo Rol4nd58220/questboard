@@ -33,6 +33,12 @@
     <string name="messages">Messages</string>
     <string name="profile">Profile</string>
 
+    <!-- Branding -->
+    <string name="quest">Quest</string>
+    <string name="board">Board</string>
+    <string name="job_applicants">Job Applicants</string>
+    <string name="job_image">Job image</string>
+
     <!-- Accessibility -->
     <string name="menu">Menu</string>
     <string name="notifications">Notifications</string>
