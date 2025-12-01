@@ -122,3 +122,19 @@ class ApplicantsAdapter(
     override fun getItemCount(): Int = applicants.size
 }
 
+// Data class for Applicant
+data class Applicant(
+    val id: String,
+    val name: String,
+    val jobTitle: String,
+    val appliedTime: String,
+    val photoUrl: String?,
+    val skills: List<String>,
+    val distance: String,
+    val rating: Float,
+    val reviewCount: Int,
+    val ratingBreakdown: Map<Int, Int>, // star rating to percentage
+    val bio: String,
+    var isShortlisted: Boolean = false
+)
+

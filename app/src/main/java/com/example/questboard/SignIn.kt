@@ -9,10 +9,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var btnLogin: Button
@@ -21,48 +23,24 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
 
-        try {
-            setContentView(R.layout.login_activity)
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-            // Initialize Firebase Auth
-            auth = FirebaseAuth.getInstance()
-
-            // Initialize views
-            initializeViews()
-
-            // Set up click listeners
-            setupClickListeners()
-
-            Log.d("LoginActivity", "LoginActivity created successfully")
-
-        } catch (e: Exception) {
-            Log.e("LoginActivity", "Error in onCreate: ${e.message}", e)
-            Toast.makeText(this, "Error initializing login: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private fun initializeViews() {
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
         tvSignup = findViewById(R.id.tvSignup)
         tvForgot = findViewById(R.id.tvForgot)
-    }
 
-    private fun setupClickListeners() {
         btnLogin.setOnClickListener {
             loginUser()
         }
 
         tvSignup.setOnClickListener {
-            try {
-                val intent = Intent(this, Choose_Account_Type::class.java)
-                startActivity(intent)
-            } catch (e: Exception) {
-                Log.e("LoginActivity", "Error navigating to signup: ${e.message}", e)
-                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(this, Choose_Account_Type::class.java)
+            startActivity(intent)
         }
 
 
@@ -91,14 +69,50 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    // Navigate to main activity
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    // Check account type and navigate to correct dashboard
+                    checkAccountTypeAndNavigate()
                 } else {
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+    private fun checkAccountTypeAndNavigate() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val accountType = document.getString("accountType")
+                    Log.d("LoginActivity", "Account type: $accountType")
+
+                    val intent = when (accountType) {
+                        "employer" -> Intent(this, EmployerDashboardActivity::class.java)
+                        "job_seeker" -> Intent(this, MainActivity::class.java)
+                        else -> {
+                            Log.w("LoginActivity", "Unknown account type: $accountType, defaulting to MainActivity")
+                            Intent(this, MainActivity::class.java)
+                        }
+                    }
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "User profile not found", Toast.LENGTH_SHORT).show()
+                    // Default to MainActivity if no profile found
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("LoginActivity", "Error fetching user data: ${e.message}", e)
+                Toast.makeText(this, "Error loading profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Default to MainActivity on error
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+    }
+
 
     private fun handleForgotPassword() {
         val email = etEmail.text.toString().trim()

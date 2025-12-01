@@ -33,7 +33,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Main Activity -->
+        <!-- Main Activity - Job Seeker Dashboard -->
         <activity
             android:name=".MainActivity"
             android:exported="false"

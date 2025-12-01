@@ -13,7 +13,7 @@ class OnboardingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.onboarding)
+        setContentView(R.layout.activity_onboarding)
 
         // Initialize views
         btnLogin = findViewById(R.id.btnLogin)

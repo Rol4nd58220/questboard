@@ -53,7 +53,7 @@ class EmployerRegister : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.em_register_form_activity)
+        setContentView(R.layout.activity_employer_register)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()

@@ -12,7 +12,7 @@ class Choose_Account_Type : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.choose_account_type_activity)
+        setContentView(R.layout.activity_choose_account_type)
 
         btnContinueJobSeeker = findViewById(R.id.btnContinueJobSeeker)
         btnContinueEmployer = findViewById(R.id.btnContinueEmployer)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:background="#0F0F0F"
     android:padding="10dp"
@@ -10,7 +11,8 @@
     <ImageView
         android:id="@+id/navHome"
         android:src="@drawable/ic_home"
-        android:tint="#FFFFFF"
+        app:tint="#FFFFFF"
+        android:contentDescription="Home"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"/>
@@ -18,7 +20,8 @@
     <ImageView
         android:id="@+id/navJobs"
         android:src="@drawable/ic_work"
-        android:tint="#FFFFFF"
+        app:tint="#FFFFFF"
+        android:contentDescription="Jobs"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"/>
@@ -26,7 +29,8 @@
     <ImageView
         android:id="@+id/navCommunity"
         android:src="@drawable/ic_people"
-        android:tint="#FFFFFF"
+        app:tint="#FFFFFF"
+        android:contentDescription="Community"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"/>
@@ -34,7 +38,8 @@
     <ImageView
         android:id="@+id/navMessages"
         android:src="@drawable/ic_chat"
-        android:tint="#FFFFFF"
+        app:tint="#FFFFFF"
+        android:contentDescription="Messages"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"/>
@@ -42,7 +47,8 @@
     <ImageView
         android:id="@+id/navProfile"
         android:src="@drawable/ic_person"
-        android:tint="#FFFFFF"
+        app:tint="#FFFFFF"
+        android:contentDescription="Profile"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_weight="1"/>

@@ -48,7 +48,7 @@ class JobSeekerRegister : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.jb_register_form_activity)
+        setContentView(R.layout.activity_jobseeker_register)
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()

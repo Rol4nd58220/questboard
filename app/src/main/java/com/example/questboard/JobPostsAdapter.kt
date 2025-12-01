@@ -15,7 +15,7 @@ class JobPostsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobPostViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_job_applicants_post, parent, false)
+            .inflate(R.layout.item_job_post, parent, false)
         return JobPostViewHolder(view)
     }
 
