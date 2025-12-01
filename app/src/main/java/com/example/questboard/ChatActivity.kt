@@ -72,14 +72,14 @@ class ChatActivity : AppCompatActivity() {
         tvChatName.text = otherUserName
         tvJobTitle.text = jobTitle
 
-        // Get current user info
-        loadCurrentUserInfo()
-
-        // If conversation doesn't exist, create it
-        if (conversationId.isEmpty() && otherUserId.isNotEmpty() && jobId.isNotEmpty()) {
-            createConversation(otherUserId, jobId, jobTitle, applicationId, otherUserName)
-        } else if (conversationId.isNotEmpty()) {
-            loadConversation()
+        // Get current user info first, then initialize conversation
+        loadCurrentUserInfo {
+            // After user info is loaded, handle conversation
+            if (conversationId.isEmpty() && otherUserId.isNotEmpty() && jobId.isNotEmpty()) {
+                createConversation(otherUserId, jobId, jobTitle, applicationId, otherUserName)
+            } else if (conversationId.isNotEmpty()) {
+                loadConversation()
+            }
         }
 
         setupListeners()
@@ -118,7 +118,7 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadCurrentUserInfo() {
+    private fun loadCurrentUserInfo(onComplete: () -> Unit = {}) {
         val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -137,9 +137,16 @@ class ChatActivity : AppCompatActivity() {
                     }
                 }.ifEmpty { "User" }
 
+                withContext(Dispatchers.Main) {
+                    onComplete()
+                }
+
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading user info", e)
                 currentUserName = "User"
+                withContext(Dispatchers.Main) {
+                    onComplete()
+                }
             }
         }
     }

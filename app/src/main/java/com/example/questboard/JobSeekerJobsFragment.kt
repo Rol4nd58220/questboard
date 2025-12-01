@@ -422,9 +422,8 @@ class JobSeekerJobsFragment : Fragment() {
         // Open ChatActivity with the application details
         // Conversation will be created automatically if it doesn't exist
         val intent = Intent(requireContext(), ChatActivity::class.java).apply {
-            // If conversation exists (from when they applied), it will be loaded
-            // Otherwise, it will be created with these details
-            putExtra(ChatActivity.EXTRA_CONVERSATION_ID, "${currentUser.uid}_${application.employerId}_${application.jobId}")
+            // Don't pass conversationId - let ChatActivity create it properly
+            // This ensures the conversation is created with all required fields in Firestore
             putExtra(ChatActivity.EXTRA_OTHER_USER_ID, application.employerId)
             putExtra(ChatActivity.EXTRA_OTHER_USER_NAME, application.employerName)
             putExtra(ChatActivity.EXTRA_JOB_ID, application.jobId)

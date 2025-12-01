@@ -36,6 +36,8 @@ class MessagingRepository {
         return try {
             // Create conversation ID (format: jobSeekerId_employerId_jobId)
             val conversationId = "${jobSeekerId}_${employerId}_${jobId}"
+            Log.d(TAG, "Attempting to get or create conversation: $conversationId")
+            Log.d(TAG, "JobSeeker: $jobSeekerId ($jobSeekerName), Employer: $employerId ($employerName)")
 
             // Check if conversation already exists
             val existingConv = conversationsRef.document(conversationId).get().await()
@@ -66,7 +68,9 @@ class MessagingRepository {
                     updatedAt = Timestamp.now()
                 )
 
+                Log.d(TAG, "Creating new conversation with participants: ${conversation.participants}")
                 conversationsRef.document(conversationId).set(conversation).await()
+                Log.d(TAG, "Conversation document created successfully")
 
                 // Add system message
                 sendSystemMessage(conversationId, "$jobSeekerName applied for $jobTitle")
@@ -87,6 +91,8 @@ class MessagingRepository {
         userId: String,
         onConversationsChanged: (List<Conversation>) -> Unit
     ): ListenerRegistration {
+        Log.d(TAG, "Setting up conversation listener for user: $userId")
+
         return conversationsRef
             .whereArrayContains("participants", userId)
             .orderBy("lastMessageTime", Query.Direction.DESCENDING)
@@ -97,16 +103,20 @@ class MessagingRepository {
                     return@addSnapshotListener
                 }
 
+                Log.d(TAG, "Snapshot received: ${snapshot?.documents?.size ?: 0} documents")
+
                 val conversations = snapshot?.documents?.mapNotNull { doc ->
                     try {
-                        doc.toObject(Conversation::class.java)
+                        val conv = doc.toObject(Conversation::class.java)
+                        Log.d(TAG, "Parsed conversation: ${doc.id}, participants: ${conv?.participants}")
+                        conv
                     } catch (e: Exception) {
                         Log.e(TAG, "Error parsing conversation: ${doc.id}", e)
                         null
                     }
                 } ?: emptyList()
 
-                Log.d(TAG, "Loaded ${conversations.size} conversations")
+                Log.d(TAG, "Loaded ${conversations.size} conversations for user $userId (sorted by Firestore)")
                 onConversationsChanged(conversations)
             }
     }
@@ -278,6 +288,48 @@ class MessagingRepository {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting conversation", e)
+            Result.failure(e)
+        }
+    }
+
+    /**
+     * Delete a conversation and all its messages
+     * Note: This deletes for BOTH participants (complete deletion)
+     */
+    suspend fun deleteConversation(conversationId: String): Result<Unit> {
+        return try {
+            val currentUserId = auth.currentUser?.uid ?: return Result.failure(Exception("Not logged in"))
+
+            // Verify current user is a participant
+            val convDoc = conversationsRef.document(conversationId).get().await()
+            val conversation = convDoc.toObject(Conversation::class.java)
+
+            if (conversation == null) {
+                return Result.failure(Exception("Conversation not found"))
+            }
+
+            if (!conversation.participants.contains(currentUserId)) {
+                return Result.failure(Exception("Unauthorized to delete this conversation"))
+            }
+
+            // Delete all messages in the conversation
+            val messagesSnapshot = conversationsRef
+                .document(conversationId)
+                .collection("messages")
+                .get()
+                .await()
+
+            messagesSnapshot.documents.forEach { messageDoc ->
+                messageDoc.reference.delete().await()
+            }
+
+            // Delete the conversation document
+            conversationsRef.document(conversationId).delete().await()
+
+            Log.d(TAG, "Deleted conversation: $conversationId")
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error deleting conversation", e)
             Result.failure(e)
         }
     }

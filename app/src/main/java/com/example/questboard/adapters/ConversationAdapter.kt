@@ -12,7 +12,8 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class ConversationAdapter(
-    private val onConversationClick: (Conversation) -> Unit
+    private val onConversationClick: (Conversation) -> Unit,
+    private val onConversationLongClick: (Conversation) -> Unit = {}
 ) : RecyclerView.Adapter<ConversationAdapter.ViewHolder>() {
 
     private val conversations = mutableListOf<Conversation>()
@@ -68,6 +69,12 @@ class ConversationAdapter(
         // Click listener
         holder.itemView.setOnClickListener {
             onConversationClick(conversation)
+        }
+
+        // Long click listener for delete
+        holder.itemView.setOnLongClickListener {
+            onConversationLongClick(conversation)
+            true
         }
     }
 
