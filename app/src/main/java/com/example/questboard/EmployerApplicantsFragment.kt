@@ -78,13 +78,12 @@ class EmployerApplicantsFragment : Fragment() {
 
         firestore.collection("applications")
             .whereEqualTo("employerId", currentUser.uid)
-            .orderBy("appliedAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 progressBar?.visibility = View.GONE
 
                 if (error != null) {
                     android.util.Log.e("EmployerApplicantsFragment", "Error loading applicants: ${error.message}", error)
-                    Toast.makeText(context, "Error loading applicants", Toast.LENGTH_SHORT).show()
+                    // Don't show toast - just log
                     tvNoApplicants?.visibility = View.VISIBLE
                     tvNoApplicants?.text = "Error loading applicants"
                     return@addSnapshotListener

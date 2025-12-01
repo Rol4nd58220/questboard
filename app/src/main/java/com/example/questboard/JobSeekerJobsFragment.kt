@@ -83,21 +83,29 @@ class JobSeekerJobsFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        // Setup Applied Jobs RecyclerView
+        // Setup Applied Jobs RecyclerView with new card adapter
         recyclerViewApplied?.layoutManager = LinearLayoutManager(context)
         appliedJobsAdapter = AppliedJobsAdapter(
             mutableListOf(),
-            onViewJobClick = { application -> viewJobDetails(application) },
-            onCancelApplicationClick = { application -> cancelApplication(application) }
+            onViewJobClick = { application ->
+                viewJobDetails(application)
+            },
+            onCancelApplicationClick = { application ->
+                showCancelConfirmation(application)
+            }
         )
         recyclerViewApplied?.adapter = appliedJobsAdapter
 
-        // Setup Active Jobs RecyclerView
+        // Setup Active Jobs RecyclerView with new card adapter
         recyclerViewActive?.layoutManager = LinearLayoutManager(context)
         activeJobsAdapter = ActiveJobsAdapter(
             mutableListOf(),
-            onViewJobClick = { application -> viewJobDetails(application) },
-            onContactEmployerClick = { application -> contactEmployer(application) }
+            onViewJobClick = { application ->
+                viewActiveJobDetails(application)
+            },
+            onContactEmployerClick = { application ->
+                messageEmployer(application)
+            }
         )
         recyclerViewActive?.adapter = activeJobsAdapter
     }
@@ -145,13 +153,12 @@ class JobSeekerJobsFragment : Fragment() {
 
         firestore.collection("applications")
             .whereEqualTo("applicantId", currentUser.uid)
-            .orderBy("appliedAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 progressBar?.visibility = View.GONE
 
                 if (error != null) {
                     android.util.Log.e("JobSeekerJobsFragment", "Error loading applications: ${error.message}", error)
-                    Toast.makeText(context, "Error loading applications", Toast.LENGTH_SHORT).show()
+                    // Don't show toast repeatedly - just log
                     tvNoJobs?.visibility = View.VISIBLE
                     tvNoJobs?.text = "Error loading applications"
                     return@addSnapshotListener
@@ -159,7 +166,11 @@ class JobSeekerJobsFragment : Fragment() {
 
                 if (snapshot != null && !snapshot.isEmpty) {
                     val applications = snapshot.toObjects(Application::class.java)
-                    appliedJobsAdapter?.updateApplications(applications)
+
+                    // Filter out accepted applications (they go to Active tab)
+                    val appliedOnly = applications.filter { it.status != "Accepted" }
+
+                    appliedJobsAdapter?.updateApplications(appliedOnly)
                     recyclerViewApplied?.visibility = View.VISIBLE
                     tvNoJobs?.visibility = View.GONE
 
@@ -187,13 +198,12 @@ class JobSeekerJobsFragment : Fragment() {
         firestore.collection("applications")
             .whereEqualTo("applicantId", currentUser.uid)
             .whereEqualTo("status", "Accepted")
-            .orderBy("respondedAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 progressBar?.visibility = View.GONE
 
                 if (error != null) {
                     android.util.Log.e("JobSeekerJobsFragment", "Error loading active jobs: ${error.message}", error)
-                    Toast.makeText(context, "Error loading active jobs", Toast.LENGTH_SHORT).show()
+                    // Don't show toast repeatedly - just log
                     tvNoJobs?.visibility = View.VISIBLE
                     tvNoJobs?.text = "Error loading active jobs"
                     return@addSnapshotListener
@@ -296,34 +306,134 @@ class JobSeekerJobsFragment : Fragment() {
         dialog.show()
     }
 
-    private fun cancelApplication(application: Application) {
+    private fun showCancelConfirmation(application: Application) {
         AlertDialog.Builder(requireContext())
             .setTitle("Cancel Application")
-            .setMessage("Are you sure you want to cancel your application for '${application.jobTitle}'?")
+            .setMessage("Are you sure you want to cancel your application for '${application.jobTitle}'?\n\nThis action cannot be undone.")
             .setPositiveButton("Yes, Cancel") { _, _ ->
-                firestore.collection("applications").document(application.id)
-                    .delete()
-                    .addOnSuccessListener {
-                        // Update job applicants count
-                        firestore.collection("jobs").document(application.jobId)
-                            .get()
-                            .addOnSuccessListener { doc ->
-                                val currentCount = doc.getLong("applicantsCount")?.toInt() ?: 0
-                                if (currentCount > 0) {
-                                    firestore.collection("jobs").document(application.jobId)
-                                        .update("applicantsCount", currentCount - 1)
-                                }
-                            }
-
-                        Toast.makeText(context, "Application cancelled", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(context, "Error cancelling application: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+                cancelApplication(application)
             }
             .setNegativeButton("No", null)
             .show()
     }
+
+    private fun cancelApplication(application: Application) {
+        firestore.collection("applications").document(application.id)
+            .delete()
+            .addOnSuccessListener {
+                // Update job applicants count
+                firestore.collection("jobs").document(application.jobId)
+                    .get()
+                    .addOnSuccessListener { doc ->
+                        val currentCount = doc.getLong("applicantsCount")?.toInt() ?: 0
+                        if (currentCount > 0) {
+                            firestore.collection("jobs").document(application.jobId)
+                                .update("applicantsCount", currentCount - 1)
+                        }
+                    }
+
+                Toast.makeText(context, "Application cancelled successfully", Toast.LENGTH_SHORT).show()
+
+                // Reload applications
+                loadAppliedJobs()
+            }
+            .addOnFailureListener { e ->
+                android.util.Log.e("JobSeekerJobsFragment", "Error cancelling: ${e.message}", e)
+                Toast.makeText(context, "Failed to cancel application", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun viewActiveJobDetails(application: Application) {
+        // Load the job and employer details
+        firestore.collection("jobs").document(application.jobId)
+            .get()
+            .addOnSuccessListener { jobDoc ->
+                if (!jobDoc.exists()) {
+                    Toast.makeText(context, "Job not found", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+
+                val job = jobDoc.toObject(Job::class.java)
+                if (job == null) {
+                    Toast.makeText(context, "Error loading job details", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+
+                // Load employer details
+                firestore.collection("users").document(application.employerId)
+                    .get()
+                    .addOnSuccessListener { userDoc ->
+                        val employerPhone = userDoc.getString("phone") ?: "Not available"
+                        val employerEmail = userDoc.getString("email") ?: application.employerEmail
+
+                        showActiveJobDetailsDialog(job, application, employerPhone, employerEmail)
+                    }
+                    .addOnFailureListener { e ->
+                        android.util.Log.e("JobSeekerJobsFragment", "Error loading employer: ${e.message}", e)
+                        // Show dialog without phone
+                        showActiveJobDetailsDialog(job, application, "Not available", application.employerEmail)
+                    }
+            }
+            .addOnFailureListener { e ->
+                android.util.Log.e("JobSeekerJobsFragment", "Error loading job: ${e.message}", e)
+                Toast.makeText(context, "Error loading job details", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showActiveJobDetailsDialog(
+        job: Job,
+        application: Application,
+        employerPhone: String,
+        employerEmail: String
+    ) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_active_job_details, null)
+
+        // Set job details
+        dialogView.findViewById<TextView>(R.id.tvDialogJobTitle).text = job.title
+        dialogView.findViewById<TextView>(R.id.tvDialogEmployerName).text = application.employerName
+        dialogView.findViewById<TextView>(R.id.tvDialogEmployerPhone).text = employerPhone
+        dialogView.findViewById<TextView>(R.id.tvDialogEmployerEmail).text = employerEmail
+        dialogView.findViewById<TextView>(R.id.tvDialogCategory).text = job.category
+        dialogView.findViewById<TextView>(R.id.tvDialogLocation).text = job.location
+        dialogView.findViewById<TextView>(R.id.tvDialogAmount).text = "₱${String.format(java.util.Locale.US, "%.2f", job.amount)} / ${job.paymentType}"
+        dialogView.findViewById<TextView>(R.id.tvDialogDateTime).text = job.dateTime
+        dialogView.findViewById<TextView>(R.id.tvDialogDescription).text = job.description
+        dialogView.findViewById<TextView>(R.id.tvDialogRequirements).text =
+            if (job.requirements.isNotEmpty()) job.requirements else "No specific requirements"
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setPositiveButton("Close", null)
+            .setNeutralButton("Message Employer") { _, _ ->
+                messageEmployer(application)
+            }
+            .create()
+
+        dialog.show()
+    }
+
+    private fun messageEmployer(application: Application) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(context, "Please login to send messages", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Open ChatActivity with the application details
+        // Conversation will be created automatically if it doesn't exist
+        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+            // If conversation exists (from when they applied), it will be loaded
+            // Otherwise, it will be created with these details
+            putExtra(ChatActivity.EXTRA_CONVERSATION_ID, "${currentUser.uid}_${application.employerId}_${application.jobId}")
+            putExtra(ChatActivity.EXTRA_OTHER_USER_ID, application.employerId)
+            putExtra(ChatActivity.EXTRA_OTHER_USER_NAME, application.employerName)
+            putExtra(ChatActivity.EXTRA_JOB_ID, application.jobId)
+            putExtra(ChatActivity.EXTRA_JOB_TITLE, application.jobTitle)
+            putExtra(ChatActivity.EXTRA_APPLICATION_ID, application.id)
+        }
+        startActivity(intent)
+    }
+
 
     private fun contactEmployer(application: Application) {
         val options = arrayOf(

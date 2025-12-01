@@ -93,12 +93,14 @@ class EmployerMyJobsFragment : Fragment() {
 
         firestore.collection("jobs")
             .whereEqualTo("employerId", currentUser.uid)
-            .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 progressBar.visibility = View.GONE
 
                 if (error != null) {
-                    Toast.makeText(context, "Error loading jobs: ${error.message}", Toast.LENGTH_SHORT).show()
+                    android.util.Log.e("EmployerMyJobsFragment", "Error loading jobs: ${error.message}", error)
+                    // Don't show toast spam
+                    tvNoJobs.visibility = View.VISIBLE
+                    tvNoJobs.text = "Error loading jobs"
                     return@addSnapshotListener
                 }
 

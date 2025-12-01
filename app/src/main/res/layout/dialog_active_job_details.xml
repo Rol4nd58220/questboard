@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1A1A18"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Job Title -->
+        <TextView
+            android:id="@+id/tvDialogJobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="House Cleaner Needed"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Employer Info Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Employer Information"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#0F0F0F"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Employer Name -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Name:"
+                    android:textColor="#CCCCCC"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDialogEmployerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Juan Dela Cruz"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Employer Phone -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Phone:"
+                    android:textColor="#CCCCCC"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDialogEmployerPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="09171234567"
+                    android:textColor="#4CAF50"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Employer Email -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Email:"
+                    android:textColor="#CCCCCC"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tvDialogEmployerEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="juan@example.com"
+                    android:textColor="#4CAF50"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Job Details Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Details"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Category -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Category:"
+                android:textColor="#CCCCCC"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvDialogCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cleaning"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <!-- Location -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location:"
+                android:textColor="#CCCCCC"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvDialogLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manila"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <!-- Payment -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Payment:"
+                android:textColor="#CCCCCC"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvDialogAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱500/Daily"
+                android:textColor="#4CAF50"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- Date/Time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Date/Time:"
+                android:textColor="#CCCCCC"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tvDialogDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12/15/2024 09:00"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvDialogDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Looking for reliable house cleaner..."
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Requirements -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Requirements"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvDialogRequirements"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Experience required"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
+

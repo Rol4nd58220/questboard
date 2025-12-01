@@ -102,17 +102,24 @@ class EmailPasswordSetupActivity : AppCompatActivity() {
     private fun saveUserProfile() {
         val userId = auth.currentUser?.uid ?: return
 
+        val firstName = intent.getStringExtra("FIRST_NAME") ?: ""
+        val middleName = intent.getStringExtra("MIDDLE_NAME") ?: ""
+        val lastName = intent.getStringExtra("LAST_NAME") ?: ""
+        val fullName = "$firstName $middleName $lastName".trim().replace("\\s+".toRegex(), " ")
+
         val userData = hashMapOf(
-            "firstName" to intent.getStringExtra("FIRST_NAME"),
-            "middleName" to intent.getStringExtra("MIDDLE_NAME"),
-            "lastName" to intent.getStringExtra("LAST_NAME"),
+            "firstName" to firstName,
+            "middleName" to middleName,
+            "lastName" to lastName,
+            "fullName" to fullName,  // Added for easier display
             "phone" to intent.getStringExtra("PHONE"),
             "address1" to intent.getStringExtra("ADDRESS1"),
             "address2" to intent.getStringExtra("ADDRESS2"),
             "birthday" to intent.getStringExtra("BIRTHDAY"),
             "idType" to intent.getStringExtra("ID_TYPE"),
+            "email" to (auth.currentUser?.email ?: ""),
             "isJobSeeker" to isJobSeeker, // true = job seeker, false = employer
-            "createdAt" to System.currentTimeMillis()
+            "createdAt" to com.google.firebase.Timestamp.now()
         )
 
         // Add business permit type for employers

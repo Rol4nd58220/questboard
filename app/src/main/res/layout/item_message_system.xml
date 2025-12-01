@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- System message (like "Application accepted") -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvSystemMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="System message"
+        android:textColor="#AAAAAA"
+        android:textSize="13sp"
+        android:background="#2A2A28"
+        android:padding="8dp"
+        android:gravity="center"/>
+
+</LinearLayout>
+

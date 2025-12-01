@@ -39,13 +39,27 @@
             android:contentDescription="Search Icon"/>
     </FrameLayout>
 
-    <!-- Content -->
+    <!-- Conversations RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvConversations"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/searchBarContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Empty State -->
     <LinearLayout
+        android:id="@+id/emptyState"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="20dp"
         android:gravity="center"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/searchBarContainer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Messages"
+            android:text="No conversations yet"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"/>
@@ -62,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chat with job seekers"
+            android:text="Wait for job seekers to message you"
             android:textColor="#CCCCCC"
             android:textSize="16sp"
             android:layout_marginTop="10dp"/>

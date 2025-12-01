@@ -32,37 +32,70 @@ class JobSeekerProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        try {
+            auth = FirebaseAuth.getInstance()
+            db = FirebaseFirestore.getInstance()
 
-        // Load user profile data
-        loadUserProfile(view)
+            // Check if user is logged in
+            if (auth.currentUser == null) {
+                android.util.Log.w("ProfileFragment", "User not logged in")
+                Toast.makeText(context, "Please login again", Toast.LENGTH_SHORT).show()
+                return
+            }
 
-        // Set up logout button if it exists
-        view.findViewById<Button>(R.id.btnLogout)?.setOnClickListener {
-            logoutUser()
+            // Load user profile data
+            loadUserProfile(view)
+
+            // Set up logout button if it exists
+            view.findViewById<Button>(R.id.btnLogout)?.setOnClickListener {
+                logoutUser()
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("ProfileFragment", "Error in onViewCreated: ${e.message}", e)
+            Toast.makeText(context, "Error loading profile", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun loadUserProfile(view: View) {
-        val userId = auth.currentUser?.uid ?: return
+        try {
+            val userId = auth.currentUser?.uid
+            if (userId == null) {
+                android.util.Log.w("ProfileFragment", "No user ID available")
+                return
+            }
 
-        db.collection("users").document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val firstName = document.getString("firstName")
-                    val lastName = document.getString("lastName")
-                    val phone = document.getString("phone")
+            db.collection("users").document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    try {
+                        if (document.exists()) {
+                            val firstName = document.getString("firstName") ?: ""
+                            val lastName = document.getString("lastName") ?: ""
+                            val fullName = document.getString("fullName") ?: "$firstName $lastName"
 
-                    // Update UI with user data
-                    view.findViewById<TextView>(R.id.txtName)?.text = "$firstName $lastName"
-                    // Add more fields as needed based on your layout
+                            // Update UI with user data - safely
+                            view.findViewById<TextView>(R.id.txtName)?.text = fullName.ifEmpty { "User" }
+
+                            android.util.Log.d("ProfileFragment", "Profile loaded: $fullName")
+                        } else {
+                            android.util.Log.w("ProfileFragment", "User document does not exist")
+                            // Set default name
+                            view.findViewById<TextView>(R.id.txtName)?.text = "User Profile"
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.e("ProfileFragment", "Error processing profile data: ${e.message}", e)
+                        view.findViewById<TextView>(R.id.txtName)?.text = "User"
+                    }
                 }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(context, "Error loading profile: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+                .addOnFailureListener { e ->
+                    android.util.Log.e("ProfileFragment", "Error loading profile: ${e.message}", e)
+                    // Don't crash - just show error
+                    Toast.makeText(context, "Could not load profile", Toast.LENGTH_SHORT).show()
+                    view.findViewById<TextView>(R.id.txtName)?.text = "User"
+                }
+        } catch (e: Exception) {
+            android.util.Log.e("ProfileFragment", "Error in loadUserProfile: ${e.message}", e)
+        }
     }
 
     private fun logoutUser() {

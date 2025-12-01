@@ -78,32 +78,64 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkAccountTypeAndNavigate() {
-        val userId = auth.currentUser?.uid ?: return
+        val userId = auth.currentUser?.uid ?: run {
+            Log.e("LoginActivity", "No user ID found after login")
+            Toast.makeText(this, "Login error. Please try again.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Log.d("LoginActivity", "Fetching user profile for: $userId")
 
         db.collection("users").document(userId)
             .get()
             .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val isJobSeeker = document.getBoolean("isJobSeeker") ?: true
-                    Log.d("LoginActivity", "isJobSeeker: $isJobSeeker")
+                try {
+                    if (document.exists()) {
+                        val isJobSeeker = document.getBoolean("isJobSeeker") ?: true
+                        Log.d("LoginActivity", "User found. isJobSeeker: $isJobSeeker")
 
-                    val intent = if (isJobSeeker) {
-                        Intent(this, MainActivity::class.java)
+                        val intent = if (isJobSeeker) {
+                            Intent(this, MainActivity::class.java)
+                        } else {
+                            Intent(this, EmployerDashboardActivity::class.java)
+                        }
+                        startActivity(intent)
+                        finish()
                     } else {
-                        Intent(this, EmployerDashboardActivity::class.java)
+                        Log.w("LoginActivity", "User document does not exist. Creating default profile...")
+
+                        // Create a basic user profile if it doesn't exist
+                        val defaultProfile = hashMapOf(
+                            "email" to (auth.currentUser?.email ?: ""),
+                            "isJobSeeker" to true,
+                            "fullName" to "User",
+                            "createdAt" to com.google.firebase.Timestamp.now()
+                        )
+
+                        db.collection("users").document(userId)
+                            .set(defaultProfile)
+                            .addOnSuccessListener {
+                                Log.d("LoginActivity", "Default profile created")
+                                startActivity(Intent(this, MainActivity::class.java))
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("LoginActivity", "Failed to create profile: ${e.message}", e)
+                                // Still navigate to MainActivity
+                                startActivity(Intent(this, MainActivity::class.java))
+                                finish()
+                            }
                     }
-                    startActivity(intent)
-                    finish()
-                } else {
-                    Toast.makeText(this, "User profile not found", Toast.LENGTH_SHORT).show()
-                    // Default to MainActivity if no profile found
+                } catch (e: Exception) {
+                    Log.e("LoginActivity", "Error processing user data: ${e.message}", e)
+                    Toast.makeText(this, "Error loading profile", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
             }
             .addOnFailureListener { e ->
                 Log.e("LoginActivity", "Error fetching user data: ${e.message}", e)
-                Toast.makeText(this, "Error loading profile: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Could not load profile. Logging in anyway...", Toast.LENGTH_SHORT).show()
                 // Default to MainActivity on error
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
