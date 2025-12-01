@@ -227,6 +227,7 @@ class JobSeekerRegister : AppCompatActivity() {
         birthday: String,
         idType: String
     ) {
+        // this is txt
         // For now, navigate to a separate email/password screen
         val intent = Intent(this, EmailPasswordSetupActivity::class.java)
         intent.putExtra("ACCOUNT_TYPE", "job_seeker")
