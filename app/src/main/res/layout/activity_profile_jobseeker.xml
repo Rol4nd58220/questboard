@@ -27,13 +27,14 @@
 
 
             <!-- ========================================= -->
-            <!-- TOP BAR (Back & Settings) -->
+            <!-- TOP BAR (Back &amp; Settings) -->
             <!-- ========================================= -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="space-between">
+                android:gravity="center_vertical"
+                android:weightSum="1">
 
                 <ImageView
                     android:id="@+id/btnBack"
@@ -64,7 +65,7 @@
                 android:background="@drawable/circle_gray"
                 android:padding="2dp"/>
 
-            <!-- NAME & ROLE -->
+            <!-- NAME &amp; ROLE -->
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
@@ -190,10 +191,10 @@
                 android:nestedScrollingEnabled="false"/>
 
             <!-- ========================================= -->
-            <!-- SKILLS & TOOLS -->
+            <!-- SKILLS &amp; TOOLS -->
             <!-- ========================================= -->
             <TextView
-                android:text="Skills & Tools"
+                android:text="Skills &amp; Tools"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -246,7 +247,7 @@
                 android:id="@+id/txtEndorsements"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Referrals & Endorsements"
+                android:text="Referrals &amp; Endorsements"
                 android:textColor="#CCCCCC"
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"/>

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.QuestBoard" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.QuestBoard" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#D4B471</item>
+        <item name="colorPrimaryDark">#1A1A18</item>
+        <item name="colorAccent">#FF8C00</item>
+        <item name="android:windowBackground">#1A1A18</item>
+    </style>
 </resources>
