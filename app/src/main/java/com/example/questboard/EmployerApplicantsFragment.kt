@@ -17,8 +17,8 @@ class EmployerApplicantsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Using the applicants activity layout
-        return inflater.inflate(R.layout.activity_applicants, container, false)
+        // Using the fragment layout (no duplicate nav bars)
+        return inflater.inflate(R.layout.fragment_employer_applicants, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

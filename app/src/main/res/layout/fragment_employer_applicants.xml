@@ -4,33 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#1A1A18">
+    android:background="#1A1A18"
+    android:padding="20dp">
 
-    <!-- Content -->
-    <LinearLayout
+    <!-- Job Applicants Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Job Applicants"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Applicants RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerApplicants"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Applicants Fragment"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View and manage job applicants"
-            android:textColor="#CCCCCC"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp"/>
-
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
 

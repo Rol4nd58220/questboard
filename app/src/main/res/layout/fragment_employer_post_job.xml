@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1A1A18"
@@ -9,36 +10,234 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
 
+        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Post a New Job"
+            android:text="Post a Job"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
 
+        <!-- Job Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Coming Soon"
-            android:textColor="#CCCCCC"
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:layout_marginTop="40dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="This feature will allow you to create and post job listings."
-            android:textColor="#999999"
-            android:textSize="14sp"
-            android:textAlignment="center"
+            android:text="Job Title *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:layout_marginTop="10dp"/>
 
+        <EditText
+            android:id="@+id/etJobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter job title"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"
+            android:padding="12dp"
+            android:background="@drawable/input_field"
+            android:inputType="text"/>
+
+        <!-- Job Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Description *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etJobDescription"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:hint="Describe the job details"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"
+            android:padding="12dp"
+            android:background="@drawable/input_field"
+            android:inputType="textMultiLine"
+            android:gravity="top"/>
+
+        <!-- Payment Type -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Payment Type *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerPaymentType"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_field"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"/>
+
+        <!-- Amount Offered -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amount Offered (₱) *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₱"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:layout_marginEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/etAmount"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="0.00"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#777777"
+                android:padding="12dp"
+                android:background="@drawable/input_field"
+                android:inputType="numberDecimal"/>
+
+        </LinearLayout>
+
+        <!-- Job Category -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Category *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerJobCategory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/input_field"
+            android:padding="8dp"
+            android:spinnerMode="dropdown"/>
+
+        <!-- Date and Time -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date and Time *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="MM/DD/YYYY HH:MM"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"
+            android:padding="12dp"
+            android:background="@drawable/input_field"
+            android:focusable="false"
+            android:clickable="true"/>
+
+        <!-- Job Location -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Location *"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etJobLocation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Enter job location"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"
+            android:padding="12dp"
+            android:background="@drawable/input_field"
+            android:inputType="text"/>
+
+        <!-- Requirements -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Requirements"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/etRequirements"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="List any requirements or qualifications"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"
+            android:padding="12dp"
+            android:background="@drawable/input_field"
+            android:inputType="textMultiLine"
+            android:gravity="top"/>
+
+        <!-- Upload Image -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload Image"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Image Preview -->
+        <ImageView
+            android:id="@+id/imgJobPreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="#2A2A28"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="Job Image Preview"/>
+
+        <Button
+            android:id="@+id/btnUploadImage"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="Upload Image"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Post Job Button -->
+        <Button
+            android:id="@+id/btnPostJob"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Post Job"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_button"/>
+
     </LinearLayout>
+
 </ScrollView>
 
