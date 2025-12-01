@@ -62,8 +62,9 @@ class EmployerDashboardActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
             .replace(R.id.fragment_container_employer, fragment)
-            .commit()
+            .commitNow()
     }
 }
 

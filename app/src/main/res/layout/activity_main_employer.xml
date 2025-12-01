@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A18">
+    android:background="#1A1A18"
+    android:fitsSystemWindows="false"
+    android:clipChildren="true"
+    android:clipToPadding="true">
 
     <!-- Top App Bar -->
     <LinearLayout
@@ -26,7 +29,7 @@
             android:layout_height="32dp"
             android:src="@drawable/ic_menu"
             app:tint="#FFFFFF"
-            android:contentDescription="Menu"
+            android:contentDescription="@string/menu"
             android:padding="4dp"/>
 
         <!-- QuestBoard Logo (centered) -->
@@ -37,7 +40,7 @@
             android:layout_weight="1"
             android:src="@drawable/logo"
             android:scaleType="centerInside"
-            android:contentDescription="QuestBoard Logo"
+            android:contentDescription="@string/questboard_logo"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"/>
 
@@ -48,7 +51,7 @@
             android:layout_height="32dp"
             android:src="@drawable/ic_notification"
             app:tint="#FFFFFF"
-            android:contentDescription="Notifications"
+            android:contentDescription="@string/notifications"
             android:padding="4dp"/>
     </LinearLayout>
 
@@ -60,7 +63,9 @@
         app:layout_constraintTop_toBottomOf="@id/topAppBar"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_employer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clipChildren="true"
+        android:clipToPadding="true"/>
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -68,6 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#0F0F0F"
+        android:elevation="8dp"
+        app:elevation="8dp"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemTextColor="@color/bottom_nav_color"
         app:labelVisibilityMode="labeled"

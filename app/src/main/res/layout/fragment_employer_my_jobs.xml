@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Overview"
+            android:text="@string/overview"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -52,7 +52,7 @@
                         android:id="@+id/tvTotalJobsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="#FFFFFF"
                         android:textSize="32sp"
                         android:textStyle="bold"/>
@@ -60,7 +60,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Jobs Posted"
+                        android:text="@string/total_jobs_posted"
                         android:textColor="#CCCCCC"
                         android:textSize="12sp"
                         android:textAlignment="center"
@@ -91,7 +91,7 @@
                         android:id="@+id/tvActiveJobsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="#4CAF50"
                         android:textSize="32sp"
                         android:textStyle="bold"/>
@@ -99,7 +99,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Active Jobs"
+                        android:text="@string/active_jobs"
                         android:textColor="#CCCCCC"
                         android:textSize="12sp"
                         android:textAlignment="center"
@@ -140,7 +140,7 @@
                         android:id="@+id/tvPendingApplicationsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="#FFC107"
                         android:textSize="32sp"
                         android:textStyle="bold"/>
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pending Applications"
+                        android:text="@string/pending_applications"
                         android:textColor="#CCCCCC"
                         android:textSize="12sp"
                         android:textAlignment="center"
@@ -179,7 +179,7 @@
                         android:id="@+id/tvCompletedJobsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0"
+                        android:text="@string/zero"
                         android:textColor="#2196F3"
                         android:textSize="32sp"
                         android:textStyle="bold"/>
@@ -187,7 +187,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Completed Jobs"
+                        android:text="@string/completed_jobs"
                         android:textColor="#CCCCCC"
                         android:textSize="12sp"
                         android:textAlignment="center"
@@ -203,11 +203,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recent Jobs"
+            android:text="@string/recent_jobs"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp"/>
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <!-- No Jobs Message -->
+        <TextView
+            android:id="@+id/tvNoJobs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No jobs posted yet.\nTap 'Post Job' to create your first job posting."
+            android:textColor="#CCCCCC"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:padding="32dp"
+            android:visibility="gone"/>
 
         <!-- Jobs RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView

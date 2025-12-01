@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="#1A1A18">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Applicant Name -->
+        <TextView
+            android:id="@+id/tvDialogApplicantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Applicant Name"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Email -->
+        <TextView
+            android:id="@+id/tvDialogApplicantEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: applicant@email.com"
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Phone -->
+        <TextView
+            android:id="@+id/tvDialogApplicantPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone: +1234567890"
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <!-- Job Title -->
+        <TextView
+            android:id="@+id/tvDialogJobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Applied for: Job Title"
+            android:textColor="#FFC107"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Message/Cover Letter Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Application Message:"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Message/Cover Letter -->
+        <TextView
+            android:id="@+id/tvDialogMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Message goes here..."
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:padding="12dp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#2A2A28"/>
+
+    </LinearLayout>
+
+</ScrollView>
+

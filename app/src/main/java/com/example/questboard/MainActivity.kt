@@ -24,11 +24,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        android.util.Log.d("MainActivity", "onCreate started")
+
         try {
             setContentView(R.layout.activity_main_jobseeker)
+            android.util.Log.d("MainActivity", "Layout set successfully")
 
             bottomNavigation = findViewById(R.id.bottom_navigation)
             searchFilterSection = findViewById(R.id.searchFilterSection)
+
+            android.util.Log.d("MainActivity", "Views initialized")
 
             // Set up top bar buttons
             setupTopBar()
@@ -38,45 +43,72 @@ class MainActivity : AppCompatActivity() {
 
             // Set up bottom navigation
             bottomNavigation.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.nav_home -> {
-                        showSearchFilter(true)
-                        loadFragment(JobSeekerHomeFragment())
-                        true
+                android.util.Log.d("MainActivity", "Navigation item selected: ${item.itemId}")
+
+                try {
+                    when (item.itemId) {
+                        R.id.nav_home -> {
+                            showSearchFilter(true)
+                            loadFragment(JobSeekerHomeFragment())
+                            true
+                        }
+                        R.id.nav_jobs -> {
+                            showSearchFilter(false)
+                            loadFragment(JobSeekerJobsFragment())
+                            true
+                        }
+                        R.id.nav_community -> {
+                            showSearchFilter(false)
+                            loadFragment(JobSeekerCommunityFragment())
+                            true
+                        }
+                        R.id.nav_messages -> {
+                            showSearchFilter(false)
+                            loadFragment(JobSeekerMessagesFragment())
+                            true
+                        }
+                        R.id.nav_profile -> {
+                            showSearchFilter(false)
+                            loadFragment(JobSeekerProfileFragment())
+                            true
+                        }
+                        else -> {
+                            android.util.Log.w("MainActivity", "Unknown navigation item: ${item.itemId}")
+                            false
+                        }
                     }
-                    R.id.nav_jobs -> {
-                        showSearchFilter(false)
-                        loadFragment(JobSeekerJobsFragment())
-                        true
-                    }
-                    R.id.nav_community -> {
-                        showSearchFilter(false)
-                        loadFragment(JobSeekerCommunityFragment())
-                        true
-                    }
-                    R.id.nav_messages -> {
-                        showSearchFilter(false)
-                        loadFragment(JobSeekerMessagesFragment())
-                        true
-                    }
-                    R.id.nav_profile -> {
-                        showSearchFilter(false)
-                        loadFragment(JobSeekerProfileFragment())
-                        true
-                    }
-                    else -> false
+                } catch (e: Exception) {
+                    android.util.Log.e("MainActivity", "Error switching fragment: ${e.message}", e)
+                    Toast.makeText(this, "Error loading screen", Toast.LENGTH_SHORT).show()
+                    false
                 }
             }
 
             // Load default fragment (Home)
             if (savedInstanceState == null) {
+                android.util.Log.d("MainActivity", "Loading default fragment (Home)")
                 showSearchFilter(true)
                 loadFragment(JobSeekerHomeFragment())
                 bottomNavigation.selectedItemId = R.id.nav_home
             }
+
+            android.util.Log.d("MainActivity", "onCreate completed successfully")
         } catch (e: Exception) {
-            android.util.Log.e("MainActivity", "Error in onCreate: ${e.message}", e)
-            Toast.makeText(this, "Error loading dashboard: ${e.message}", Toast.LENGTH_LONG).show()
+            android.util.Log.e("MainActivity", "Critical error in onCreate: ${e.message}", e)
+            e.printStackTrace()
+            Toast.makeText(this, "Critical error loading dashboard. Please restart the app.", Toast.LENGTH_LONG).show()
+
+            // Try to show a basic error message
+            try {
+                val errorText = TextView(this).apply {
+                    text = "Error: ${e.message}\n\nPlease restart the app or contact support."
+                    textSize = 16f
+                    setPadding(32, 32, 32, 32)
+                }
+                setContentView(errorText)
+            } catch (e2: Exception) {
+                android.util.Log.e("MainActivity", "Could not show error view: ${e2.message}", e2)
+            }
         }
     }
 
@@ -151,8 +183,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+        try {
+            android.util.Log.d("MainActivity", "Loading fragment: ${fragment.javaClass.simpleName}")
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commitAllowingStateLoss() // Use commitAllowingStateLoss to prevent crashes
+
+            android.util.Log.d("MainActivity", "Fragment loaded successfully")
+        } catch (e: Exception) {
+            android.util.Log.e("MainActivity", "Error loading fragment: ${e.message}", e)
+            Toast.makeText(this, "Error loading screen: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 }

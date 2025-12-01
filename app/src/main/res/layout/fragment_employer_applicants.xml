@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#1A1A18"
-    android:padding="20dp">
+    android:background="#1A1A18">
 
     <!-- Job Applicants Title -->
     <TextView
@@ -15,13 +14,43 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:padding="20dp"/>
 
-    <!-- Applicants RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerApplicants"
+    <!-- Content Area -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBarApplicants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <!-- No Applicants Message -->
+        <TextView
+            android:id="@+id/tvNoApplicants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No applicants yet"
+            android:textColor="#CCCCCC"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:padding="32dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <!-- Applicants RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewApplicants"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"/>
+
+    </FrameLayout>
 
 </LinearLayout>
 

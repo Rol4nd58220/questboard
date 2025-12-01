@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="#0F0F0F"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header: Title and Status -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvJobTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Job Title"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvJobStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open"
+                android:textColor="#4CAF50"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:background="@drawable/rounded_button"/>
+
+        </LinearLayout>
+
+        <!-- Category and Location -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/tvJobCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Category"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_work"
+                android:drawablePadding="4dp"
+                android:drawableTint="#CCCCCC"/>
+
+            <TextView
+                android:id="@+id/tvJobLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="4dp"
+                android:drawableTint="#CCCCCC"/>
+
+        </LinearLayout>
+
+        <!-- Amount and Payment Type -->
+        <TextView
+            android:id="@+id/tvJobAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₱500.00 Fixed"
+            android:textColor="#FFC107"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Applicants Count and Posted Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/tvApplicantsCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0 Applicants"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:drawableStart="@drawable/ic_people"
+                android:drawablePadding="4dp"
+                android:drawableTint="#FFFFFF"/>
+
+            <TextView
+                android:id="@+id/tvPostedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Posted: Dec 1, 2024"
+                android:textColor="#999999"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnEditJob"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Edit"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:background="@drawable/rounded_button"
+                android:layout_marginEnd="4dp"/>
+
+            <Button
+                android:id="@+id/btnDeleteJob"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Delete"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:backgroundTint="#F44336"
+                android:background="@drawable/rounded_button"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"/>
+
+            <Button
+                android:id="@+id/btnToggleStatus"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="Close"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:background="@drawable/rounded_button"
+                android:layout_marginStart="4dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnViewApplicants"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="View Applicants"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+

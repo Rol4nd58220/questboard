@@ -6,32 +6,45 @@
     android:orientation="vertical"
     android:background="#1A1A18">
 
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Available Jobs"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="20dp"/>
 
-    <!-- Content -->
-    <LinearLayout
+    <!-- Progress Bar -->
+    <ProgressBar
+        android:id="@+id/progressBarJobs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"/>
+
+    <!-- No Jobs Available Message -->
+    <TextView
+        android:id="@+id/tvNoJobsAvailable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No jobs available at the moment.\nCheck back later for new opportunities!"
+        android:textColor="#CCCCCC"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:padding="32dp"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"/>
+
+    <!-- Jobs RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerAvailableJobs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home Fragment"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Job Seeker Home Screen"
-            android:textColor="#CCCCCC"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp"/>
-
-    </LinearLayout>
+        android:padding="16dp"
+        android:clipToPadding="false"/>
 
 </LinearLayout>
 

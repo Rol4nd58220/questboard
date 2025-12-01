@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="#0F0F0F"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Job Title -->
+        <TextView
+            android:id="@+id/tvJobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Title"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <!-- Employer Name -->
+        <TextView
+            android:id="@+id/tvEmployerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Employer Name"
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="4dp"
+            android:drawableTint="#CCCCCC"/>
+
+        <!-- Category and Location -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/tvJobCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Category"
+                android:textColor="#CCCCCC"
+                android:textSize="13sp"
+                android:drawableStart="@drawable/ic_work"
+                android:drawablePadding="4dp"
+                android:drawableTint="#CCCCCC"/>
+
+            <TextView
+                android:id="@+id/tvJobLocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Location"
+                android:textColor="#CCCCCC"
+                android:textSize="13sp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="4dp"
+                android:drawableTint="#CCCCCC"
+                android:layout_marginStart="8dp"/>
+
+        </LinearLayout>
+
+        <!-- Amount -->
+        <TextView
+            android:id="@+id/tvJobAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₱500.00 / Hourly"
+            android:textColor="#FFC107"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvJobDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job description goes here..."
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Posted Time -->
+        <TextView
+            android:id="@+id/tvPostedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posted: Dec 1, 2024"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"/>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnViewDetails"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:text="View Details"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:background="@drawable/rounded_button"
+                android:layout_marginEnd="8dp"/>
+
+            <Button
+                android:id="@+id/btnApply"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:text="Apply Now"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#4CAF50"
+                android:background="@drawable/rounded_button"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+

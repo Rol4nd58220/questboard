@@ -117,7 +117,7 @@ class JobSeekerRegister : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val formattedDate = String.format("%02d/%02d/%d", selectedMonth + 1, selectedDay, selectedYear)
+                val formattedDate = String.format(Locale.US, "%02d/%02d/%d", selectedMonth + 1, selectedDay, selectedYear)
                 etBirthday.setText(formattedDate)
             },
             year, month, day

@@ -75,32 +75,51 @@
 
     </LinearLayout>
 
-    <!-- Content -->
-    <LinearLayout
+    <!-- Content Area -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvJobsContent"
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressBarJobs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jobs Fragment"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
+        <!-- No Jobs Message -->
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvNoJobs"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Browse and search for jobs"
+            android:text="No jobs yet"
             android:textColor="#CCCCCC"
             android:textSize="16sp"
-            android:layout_marginTop="10dp"/>
+            android:textAlignment="center"
+            android:padding="32dp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
-    </LinearLayout>
+        <!-- Applied Jobs RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewApplied"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:visibility="visible"/>
+
+        <!-- Active Jobs RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewActive"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
 </LinearLayout>
 

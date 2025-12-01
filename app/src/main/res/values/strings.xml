@@ -19,12 +19,18 @@
     <string name="total_jobs_posted">Total Jobs Posted</string>
     <string name="active_jobs">Active Jobs</string>
     <string name="pending_applicants">Pending\nApplicants</string>
+    <string name="pending_applications">Pending Applications</string>
     <string name="completed_jobs">Completed Jobs</string>
+    <string name="recent_jobs">Recent Jobs</string>
     <string name="view_all_job_posts">View All Job Posts</string>
     <string name="active_job_posts">Active Job Posts</string>
     <string name="view_applicants">View Applicants</string>
     <string name="posted_time">Posted: %s</string>
     <string name="job_status">Status: %s | Applicants: %d</string>
+    <string name="zero">0</string>
+    <string name="questboard_logo">QuestBoard Logo</string>
+    <string name="update_job">Update Job</string>
+    <string name="post_job_title">Post Job</string>
 
     <!-- Bottom Navigation -->
     <string name="my_jobs">My Jobs</string>
