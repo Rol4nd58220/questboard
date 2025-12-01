@@ -115,21 +115,60 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun handleForgotPassword() {
-        val email = etEmail.text.toString().trim()
+        // Create custom dialog
+        val dialogView = layoutInflater.inflate(R.layout.dialog_forgot_password, null)
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
 
-        if (email.isEmpty()) {
-            etEmail.error = "Enter your email"
-            etEmail.requestFocus()
-            return
+        // Set transparent background for custom styling
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Get dialog views
+        val etResetEmail = dialogView.findViewById<EditText>(R.id.etResetEmail)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
+        val btnSendReset = dialogView.findViewById<Button>(R.id.btnSendReset)
+
+        // Pre-fill email if available
+        val currentEmail = etEmail.text.toString().trim()
+        if (currentEmail.isNotEmpty()) {
+            etResetEmail.setText(currentEmail)
         }
 
-        auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Password reset email sent", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_SHORT).show()
-                }
+        // Cancel button
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Send reset button
+        btnSendReset.setOnClickListener {
+            val email = etResetEmail.text.toString().trim()
+
+            if (email.isEmpty()) {
+                etResetEmail.error = "Email is required"
+                etResetEmail.requestFocus()
+                return@setOnClickListener
             }
+
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etResetEmail.error = "Enter a valid email"
+                etResetEmail.requestFocus()
+                return@setOnClickListener
+            }
+
+            // Send password reset email
+            auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Password reset email sent to $email", Toast.LENGTH_LONG).show()
+                        dialog.dismiss()
+                    } else {
+                        Toast.makeText(this, "Failed to send reset email: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+        }
+
+        dialog.show()
     }
 }
