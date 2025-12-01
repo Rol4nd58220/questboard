@@ -230,7 +230,7 @@ class JobSeekerRegister : AppCompatActivity() {
         // this is txt
         // For now, navigate to a separate email/password screen
         val intent = Intent(this, EmailPasswordSetupActivity::class.java)
-        intent.putExtra("ACCOUNT_TYPE", "job_seeker")
+        intent.putExtra("IS_JOB_SEEKER", true) // true = job seeker
         intent.putExtra("FIRST_NAME", firstName)
         intent.putExtra("MIDDLE_NAME", middleName)
         intent.putExtra("LAST_NAME", lastName)

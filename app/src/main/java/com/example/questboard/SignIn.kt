@@ -84,16 +84,13 @@ class LoginActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    val accountType = document.getString("accountType")
-                    Log.d("LoginActivity", "Account type: $accountType")
+                    val isJobSeeker = document.getBoolean("isJobSeeker") ?: true
+                    Log.d("LoginActivity", "isJobSeeker: $isJobSeeker")
 
-                    val intent = when (accountType) {
-                        "employer" -> Intent(this, EmployerDashboardActivity::class.java)
-                        "job_seeker" -> Intent(this, MainActivity::class.java)
-                        else -> {
-                            Log.w("LoginActivity", "Unknown account type: $accountType, defaulting to MainActivity")
-                            Intent(this, MainActivity::class.java)
-                        }
+                    val intent = if (isJobSeeker) {
+                        Intent(this, MainActivity::class.java)
+                    } else {
+                        Intent(this, EmployerDashboardActivity::class.java)
                     }
                     startActivity(intent)
                     finish()

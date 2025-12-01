@@ -19,7 +19,7 @@ class EmailPasswordSetupActivity : AppCompatActivity() {
     private lateinit var etConfirmPassword: EditText
     private lateinit var btnContinue: Button
     private lateinit var tvLogin: TextView
-    private var accountType: String = ""
+    private var isJobSeeker: Boolean = true // true = job seeker, false = employer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class EmailPasswordSetupActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        accountType = intent.getStringExtra("ACCOUNT_TYPE") ?: ""
+        isJobSeeker = intent.getBooleanExtra("IS_JOB_SEEKER", true)
 
         initializeViews()
         setupClickListeners()
@@ -111,12 +111,12 @@ class EmailPasswordSetupActivity : AppCompatActivity() {
             "address2" to intent.getStringExtra("ADDRESS2"),
             "birthday" to intent.getStringExtra("BIRTHDAY"),
             "idType" to intent.getStringExtra("ID_TYPE"),
-            "accountType" to accountType,
+            "isJobSeeker" to isJobSeeker, // true = job seeker, false = employer
             "createdAt" to System.currentTimeMillis()
         )
 
         // Add business permit type for employers
-        if (accountType == "employer") {
+        if (!isJobSeeker) {
             userData["businessPermitType"] = intent.getStringExtra("BUSINESS_PERMIT_TYPE")
         }
 
@@ -132,9 +132,10 @@ class EmailPasswordSetupActivity : AppCompatActivity() {
     }
 
     private fun navigateToMainActivity() {
-        val intent = when (accountType) {
-            "employer" -> Intent(this, EmployerDashboardActivity::class.java)
-            else -> Intent(this, MainActivity::class.java)
+        val intent = if (isJobSeeker) {
+            Intent(this, MainActivity::class.java)
+        } else {
+            Intent(this, EmployerDashboardActivity::class.java)
         }
         startActivity(intent)
         finish()

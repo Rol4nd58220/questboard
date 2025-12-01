@@ -249,7 +249,7 @@ class EmployerRegister : AppCompatActivity() {
 
         // Navigate to email/password setup
         val intent = Intent(this, EmailPasswordSetupActivity::class.java)
-        intent.putExtra("ACCOUNT_TYPE", "employer")
+        intent.putExtra("IS_JOB_SEEKER", false) // false = employer
         intent.putExtra("FIRST_NAME", firstName)
         intent.putExtra("MIDDLE_NAME", middleName)
         intent.putExtra("LAST_NAME", lastName)
