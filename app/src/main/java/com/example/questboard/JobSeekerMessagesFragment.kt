@@ -1,6 +1,9 @@
 package com.example.questboard
 
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +12,9 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.questboard.adapters.ConversationAdapter
@@ -81,6 +86,86 @@ class JobSeekerMessagesFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = conversationAdapter
         }
+
+        // Add swipe-to-delete functionality
+        val swipeToDeleteCallback = object : ItemTouchHelper.SimpleCallback(
+            0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            private val deleteIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_delete)
+            private val background = ColorDrawable(Color.RED)
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val conversation = conversationAdapter.getConversationAt(position)
+
+                // Show delete confirmation dialog
+                showDeleteDialog(conversation)
+
+                // Restore the item (it will be removed if user confirms deletion)
+                conversationAdapter.notifyItemChanged(position)
+            }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                val itemView = viewHolder.itemView
+                val iconMargin = (itemView.height - deleteIcon!!.intrinsicHeight) / 2
+                val iconTop = itemView.top + (itemView.height - deleteIcon.intrinsicHeight) / 2
+                val iconBottom = iconTop + deleteIcon.intrinsicHeight
+
+                when {
+                    dX > 0 -> { // Swiping to the right
+                        val iconLeft = itemView.left + iconMargin
+                        val iconRight = itemView.left + iconMargin + deleteIcon.intrinsicWidth
+                        deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+
+                        background.setBounds(
+                            itemView.left,
+                            itemView.top,
+                            itemView.left + dX.toInt(),
+                            itemView.bottom
+                        )
+                    }
+                    dX < 0 -> { // Swiping to the left
+                        val iconLeft = itemView.right - iconMargin - deleteIcon.intrinsicWidth
+                        val iconRight = itemView.right - iconMargin
+                        deleteIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
+
+                        background.setBounds(
+                            itemView.right + dX.toInt(),
+                            itemView.top,
+                            itemView.right,
+                            itemView.bottom
+                        )
+                    }
+                    else -> {
+                        background.setBounds(0, 0, 0, 0)
+                    }
+                }
+
+                background.draw(c)
+                deleteIcon.draw(c)
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(rvConversations)
     }
 
     private fun setupListeners() {

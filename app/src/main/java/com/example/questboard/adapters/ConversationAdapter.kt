@@ -86,6 +86,10 @@ class ConversationAdapter(
         notifyDataSetChanged()
     }
 
+    fun getConversationAt(position: Int): Conversation {
+        return conversations[position]
+    }
+
     private fun formatTime(date: java.util.Date): String {
         val now = System.currentTimeMillis()
         val diff = now - date.time
