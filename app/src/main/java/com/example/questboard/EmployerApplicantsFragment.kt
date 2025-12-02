@@ -13,10 +13,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.questboard.repository.MessagingRepository
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.tasks.await
 
 /**
  * Employer Applicants Fragment
@@ -26,6 +31,7 @@ class EmployerApplicantsFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var messagingRepository: MessagingRepository
     private var recyclerView: RecyclerView? = null
     private var adapter: ApplicantsAdapter? = null
     private var progressBar: ProgressBar? = null
@@ -45,6 +51,7 @@ class EmployerApplicantsFragment : Fragment() {
         // Initialize Firebase
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        messagingRepository = MessagingRepository()
 
         // Initialize views
         recyclerView = view.findViewById(R.id.recyclerViewApplicants)
@@ -191,8 +198,7 @@ class EmployerApplicantsFragment : Fragment() {
         val options = arrayOf(
             "Send Email",
             "Call Applicant",
-            "Send Message (Coming Soon)",
-            "Cancel"
+            "Send Message"
         )
 
         AlertDialog.Builder(requireContext())
@@ -223,11 +229,81 @@ class EmployerApplicantsFragment : Fragment() {
                         }
                     }
                     2 -> {
-                        Toast.makeText(context, "Messaging feature coming soon", Toast.LENGTH_SHORT).show()
+                        // Send message - create conversation and open chat
+                        openChatWithApplicant(application)
                     }
                 }
             }
             .show()
+    }
+
+    private fun openChatWithApplicant(application: Application) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(context, "Please log in to send messages", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Show loading
+        val progressDialog = AlertDialog.Builder(requireContext())
+            .setMessage("Opening chat...")
+            .setCancelable(false)
+            .create()
+        progressDialog.show()
+
+        // Get employer name from Firestore
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val employerDoc = firestore.collection("users")
+                    .document(currentUser.uid)
+                    .get()
+                    .await()
+
+                val employerName = employerDoc.getString("name") ?: "Employer"
+
+                // Create or get conversation
+                val result = messagingRepository.getOrCreateConversation(
+                    jobSeekerId = application.applicantId,
+                    employerId = currentUser.uid,
+                    jobId = application.jobId,
+                    jobTitle = application.jobTitle,
+                    applicationId = application.id,
+                    jobSeekerName = application.applicantName,
+                    employerName = employerName
+                )
+
+                withContext(Dispatchers.Main) {
+                    progressDialog.dismiss()
+
+                    result.onSuccess { conversationId ->
+                        // Open chat activity
+                        val intent = Intent(requireContext(), ChatActivity::class.java).apply {
+                            putExtra(ChatActivity.EXTRA_CONVERSATION_ID, conversationId)
+                            putExtra(ChatActivity.EXTRA_OTHER_USER_NAME, application.applicantName)
+                            putExtra(ChatActivity.EXTRA_JOB_TITLE, application.jobTitle)
+                        }
+                        startActivity(intent)
+                    }.onFailure { error ->
+                        Toast.makeText(
+                            context,
+                            "Failed to open chat: ${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        android.util.Log.e("EmployerApplicants", "Error opening chat", error)
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    progressDialog.dismiss()
+                    Toast.makeText(
+                        context,
+                        "Error: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    android.util.Log.e("EmployerApplicants", "Error getting employer name", e)
+                }
+            }
+        }
     }
 
     override fun onResume() {
