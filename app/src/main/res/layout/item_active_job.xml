@@ -62,6 +62,22 @@
             android:textSize="12sp"
             android:layout_marginTop="8dp"/>
 
+        <!-- Confirm Completion Button -->
+        <TextView
+            android:id="@+id/tvConfirmCompletion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="✓ Confirm Completion"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#4CAF50"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
         <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="match_parent"

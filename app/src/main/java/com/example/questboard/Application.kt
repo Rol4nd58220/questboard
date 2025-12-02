@@ -18,9 +18,10 @@ data class Application(
     var applicantName: String = "",
     var applicantEmail: String = "",
     var applicantPhone: String = "",
-    var status: String = "Pending", // Pending, Accepted, Rejected
+    var status: String = "Pending", // Pending, Accepted, Rejected, Completed, Reviewed
     var appliedAt: Timestamp = Timestamp.now(),
     var respondedAt: Timestamp? = null,
+    var completedAt: Timestamp? = null,
     var message: String = "",
     var coverLetter: String = "",
     var isRead: Boolean = false,
@@ -41,6 +42,7 @@ data class Application(
         status = "Pending",
         appliedAt = Timestamp.now(),
         respondedAt = null,
+        completedAt = null,
         message = "",
         coverLetter = "",
         isRead = false,

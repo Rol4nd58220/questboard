@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1A1A1A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Completion Form"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please confirm the completion of this job"
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Job Details Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Details"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="#0F0F0F"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Job Title -->
+                <TextView
+                    android:id="@+id/tvCompletionJobTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="House Cleaner Needed"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Employer Name -->
+                <TextView
+                    android:id="@+id/tvCompletionEmployerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Employer: Juan Dela Cruz"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Payment -->
+                <TextView
+                    android:id="@+id/tvCompletionPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Payment: ₱500/Daily"
+                    android:textColor="#4CAF50"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Location -->
+                <TextView
+                    android:id="@+id/tvCompletionLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location: Manila"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp"/>
+
+                <!-- Date/Time -->
+                <TextView
+                    android:id="@+id/tvCompletionDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Scheduled: 12/15/2024 09:00 AM"
+                    android:textColor="#CCCCCC"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Completion Status Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Completion Status"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Checkbox: Job Completed -->
+        <CheckBox
+            android:id="@+id/cbJobCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I have completed this job successfully"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:buttonTint="#4CAF50"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Checkbox: Has Issues/Concerns -->
+        <CheckBox
+            android:id="@+id/cbHasIssues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I have concerns or issues to report"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:buttonTint="#FF9800"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Concerns Input (Hidden by default) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilConcerns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            app:boxBackgroundColor="#0F0F0F"
+            app:boxStrokeColor="#4CAF50"
+            app:hintTextColor="#AAAAAA">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConcerns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Describe your concerns or issues"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#777777"
+                android:minHeight="120dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="6"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Work Photos Section (DISABLED FOR NOW - Future Implementation) -->
+        <TextView
+            android:id="@+id/tvWorkPhotosLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Work Photos (Coming Soon)"
+            android:textColor="#777777"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Upload photos of your completed work"
+            android:textColor="#555555"
+            android:textSize="13sp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"/>
+
+        <!-- Upload Photo Button (DISABLED) -->
+        <Button
+            android:id="@+id/btnUploadPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📷 Upload Photo"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/rounded_button"
+            android:backgroundTint="#2196F3"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            android:enabled="false"/>
+
+        <!-- Selected Image Preview -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvImagePreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#0F0F0F"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivWorkPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Work photo preview"/>
+
+                <!-- Remove Photo Button -->
+                <ImageButton
+                    android:id="@+id/btnRemovePhoto"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="#F44336"
+                    android:src="@android:drawable/ic_menu_close_clear_cancel"
+                    android:tint="#FFFFFF"
+                    android:contentDescription="Remove photo"/>
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Additional Notes -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Additional Notes (Optional)"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:boxBackgroundColor="#0F0F0F"
+            app:boxStrokeColor="#4CAF50"
+            app:hintTextColor="#AAAAAA">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAdditionalNotes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Any additional comments or feedback"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#777777"
+                android:minHeight="100dp"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="5"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnCancelCompletion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#555555"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:layout_marginEnd="12dp"/>
+
+            <Button
+                android:id="@+id/btnSubmitCompletion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit Completion"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:background="@drawable/rounded_button"
+                android:backgroundTint="#4CAF50"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+

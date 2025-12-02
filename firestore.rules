@@ -72,6 +72,22 @@ service cloud.firestore {
       allow create: if isSignedIn();
     }
 
+    // Job completions collection
+    match /jobCompletions/{completionId} {
+      // Allow read for any signed-in user - we'll validate on the client side
+      // This is needed because queries by applicationId need to be allowed
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && (
+        request.resource.data.jobSeekerId == request.auth.uid ||
+        request.resource.data.employerId == request.auth.uid
+      );
+      allow update: if isSignedIn() && (
+        resource.data.jobSeekerId == request.auth.uid ||
+        resource.data.employerId == request.auth.uid
+      );
+      allow delete: if isSignedIn() && resource.data.jobSeekerId == request.auth.uid;
+    }
+
     // Default deny all other collections
     match /{document=**} {
       allow read, write: if false;

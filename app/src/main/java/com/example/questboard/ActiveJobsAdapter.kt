@@ -12,7 +12,8 @@ import java.util.*
 class ActiveJobsAdapter(
     private var applications: MutableList<Application>,
     private val onViewJobClick: (Application) -> Unit,
-    private val onContactEmployerClick: (Application) -> Unit
+    private val onContactEmployerClick: (Application) -> Unit,
+    private val onConfirmCompletionClick: (Application) -> Unit
 ) : RecyclerView.Adapter<ActiveJobsAdapter.ActiveJobViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActiveJobViewHolder {
@@ -38,6 +39,7 @@ class ActiveJobsAdapter(
         private val tvJobTitle: TextView = itemView.findViewById(R.id.tvJobTitle)
         private val tvEmployerName: TextView = itemView.findViewById(R.id.tvEmployerName)
         private val tvAcceptedDate: TextView = itemView.findViewById(R.id.tvAcceptedDate)
+        private val tvConfirmCompletion: TextView = itemView.findViewById(R.id.tvConfirmCompletion)
         private val tvViewJob: TextView = itemView.findViewById(R.id.tvViewJob)
         private val tvContactEmployer: TextView = itemView.findViewById(R.id.tvContactEmployer)
 
@@ -49,6 +51,11 @@ class ActiveJobsAdapter(
             val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
             val acceptedDate = application.respondedAt?.toDate() ?: application.appliedAt.toDate()
             tvAcceptedDate.text = "Accepted: ${dateFormat.format(acceptedDate)}"
+
+            // Confirm completion button
+            tvConfirmCompletion.setOnClickListener {
+                onConfirmCompletionClick(application)
+            }
 
             // View job button
             tvViewJob.setOnClickListener {

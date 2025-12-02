@@ -1,22 +1,28 @@
 package com.example.questboard
 
+// import android.app.Activity // Disabled - not needed without image upload
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+// import android.provider.MediaStore // Disabled for now - image upload
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+// import androidx.activity.result.contract.ActivityResultContracts // Disabled for now - image upload
+// import androidx.cardview.widget.CardView // Disabled - not needed without image upload
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.questboard.models.JobCompletion
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+// import com.google.firebase.storage.FirebaseStorage // Disabled for now - image upload
+// import java.util.UUID // Disabled for now - image upload
 
 /**
  * Job Seeker Jobs Fragment
@@ -27,6 +33,7 @@ class JobSeekerJobsFragment : Fragment() {
     private var isAppliedTabSelected = true
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    // private lateinit var storage: FirebaseStorage // Disabled for now - image upload
 
     private var recyclerViewApplied: RecyclerView? = null
     private var recyclerViewActive: RecyclerView? = null
@@ -34,6 +41,24 @@ class JobSeekerJobsFragment : Fragment() {
     private var activeJobsAdapter: ActiveJobsAdapter? = null
     private var progressBar: ProgressBar? = null
     private var tvNoJobs: TextView? = null
+
+    // For job completion - image upload disabled for now
+    // private var selectedImageUri: Uri? = null
+    // private var currentCompletionDialog: AlertDialog? = null
+
+    /* IMAGE PICKER DISABLED - TO RE-ENABLE LATER, UNCOMMENT THIS
+    // Image picker launcher
+    private val imagePickerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.data?.let { uri ->
+                selectedImageUri = uri
+                updateImagePreview(uri)
+            }
+        }
+    }
+    */
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +74,7 @@ class JobSeekerJobsFragment : Fragment() {
         // Initialize Firebase
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        // storage = FirebaseStorage.getInstance() // Disabled for now - image upload
 
         val tabAppliedContainer = view.findViewById<LinearLayout>(R.id.tabAppliedContainer)
         val tabActiveContainer = view.findViewById<LinearLayout>(R.id.tabActiveContainer)
@@ -105,6 +131,9 @@ class JobSeekerJobsFragment : Fragment() {
             },
             onContactEmployerClick = { application ->
                 messageEmployer(application)
+            },
+            onConfirmCompletionClick = { application ->
+                showJobCompletionForm(application)
             }
         )
         recyclerViewActive?.adapter = activeJobsAdapter
@@ -524,5 +553,297 @@ class JobSeekerJobsFragment : Fragment() {
         Toast.makeText(context, "Showing Active Jobs", Toast.LENGTH_SHORT).show()
         // TODO: Load active jobs data
     }
+
+    private fun showJobCompletionForm(application: Application) {
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_job_completion, null)
+
+        // Reset state - image upload disabled for now
+        // selectedImageUri = null
+
+        // Load job details first
+        firestore.collection("jobs").document(application.jobId)
+            .get()
+            .addOnSuccessListener { document ->
+                val job = document.toObject(Job::class.java)
+                
+                // Populate job details
+                dialogView.findViewById<TextView>(R.id.tvCompletionJobTitle).text = application.jobTitle
+                dialogView.findViewById<TextView>(R.id.tvCompletionEmployerName).text = "Employer: ${application.employerName}"
+                dialogView.findViewById<TextView>(R.id.tvCompletionPayment).text = 
+                    "Payment: ₱${String.format(java.util.Locale.US, "%.2f", job?.amount ?: 0.0)} / ${job?.paymentType ?: "Per Job"}"
+                dialogView.findViewById<TextView>(R.id.tvCompletionLocation).text = "Location: ${job?.location ?: "N/A"}"
+                dialogView.findViewById<TextView>(R.id.tvCompletionDateTime).text = "Scheduled: ${job?.dateTime ?: "N/A"}"
+
+                // Get UI elements
+                val cbJobCompleted = dialogView.findViewById<CheckBox>(R.id.cbJobCompleted)
+                val cbHasIssues = dialogView.findViewById<CheckBox>(R.id.cbHasIssues)
+                val tilConcerns = dialogView.findViewById<TextInputLayout>(R.id.tilConcerns)
+                val etConcerns = dialogView.findViewById<TextInputEditText>(R.id.etConcerns)
+                // Image upload disabled for now - will be implemented later
+                // val btnUploadPhoto = dialogView.findViewById<Button>(R.id.btnUploadPhoto)
+                // val cvImagePreview = dialogView.findViewById<CardView>(R.id.cvImagePreview)
+                // val ivWorkPhoto = dialogView.findViewById<ImageView>(R.id.ivWorkPhoto)
+                // val btnRemovePhoto = dialogView.findViewById<ImageButton>(R.id.btnRemovePhoto)
+                val etAdditionalNotes = dialogView.findViewById<TextInputEditText>(R.id.etAdditionalNotes)
+                val btnCancelCompletion = dialogView.findViewById<Button>(R.id.btnCancelCompletion)
+                val btnSubmitCompletion = dialogView.findViewById<Button>(R.id.btnSubmitCompletion)
+
+                // Handle checkbox interactions
+                cbJobCompleted.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        cbHasIssues.isChecked = false
+                        tilConcerns.visibility = View.GONE
+                    }
+                }
+
+                cbHasIssues.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        cbJobCompleted.isChecked = false
+                        tilConcerns.visibility = View.VISIBLE
+                    } else {
+                        tilConcerns.visibility = View.GONE
+                    }
+                }
+
+                // Image upload functionality disabled for now - will be implemented later
+                /*
+                // Handle image upload
+                btnUploadPhoto.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    imagePickerLauncher.launch(intent)
+                }
+
+                btnRemovePhoto.setOnClickListener {
+                    selectedImageUri = null
+                    cvImagePreview.visibility = View.GONE
+                    ivWorkPhoto.setImageURI(null)
+                }
+                */
+
+                // Create and show dialog
+                val dialog = AlertDialog.Builder(requireContext())
+                    .setView(dialogView)
+                    .setCancelable(false)
+                    .create()
+
+
+                btnCancelCompletion.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                btnSubmitCompletion.setOnClickListener {
+                    submitJobCompletion(
+                        application, 
+                        job,
+                        cbJobCompleted.isChecked,
+                        cbHasIssues.isChecked,
+                        etConcerns.text.toString(),
+                        etAdditionalNotes.text.toString(),
+                        dialog
+                    )
+                }
+
+                dialog.show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Error loading job details: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    /* IMAGE UPLOAD DISABLED - TO RE-ENABLE LATER, UNCOMMENT THIS FUNCTION
+    private fun updateImagePreview(uri: Uri) {
+        currentCompletionDialog?.let { dialog ->
+            val dialogView = dialog.findViewById<View>(android.R.id.content)
+            dialogView?.let {
+                val cvImagePreview = it.findViewById<CardView>(R.id.cvImagePreview)
+                val ivWorkPhoto = it.findViewById<ImageView>(R.id.ivWorkPhoto)
+                
+                cvImagePreview?.visibility = View.VISIBLE
+                ivWorkPhoto?.setImageURI(uri)
+            }
+        }
+    }
+    */
+
+    private fun submitJobCompletion(
+        application: Application,
+        job: Job?,
+        isCompleted: Boolean,
+        hasIssues: Boolean,
+        concerns: String,
+        additionalNotes: String,
+        dialog: AlertDialog
+    ) {
+        // Validation
+        if (!isCompleted && !hasIssues) {
+            Toast.makeText(context, "Please select completion status or report issues", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (hasIssues && concerns.trim().isEmpty()) {
+            Toast.makeText(context, "Please describe your concerns", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(context, "Please log in to submit completion", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Show progress
+        val progressDialog = AlertDialog.Builder(requireContext())
+            .setMessage("Submitting completion form...")
+            .setCancelable(false)
+            .create()
+        progressDialog.show()
+
+        // Image upload disabled for now - directly save completion data without photo
+        // When re-enabled, uncomment the uploadWorkPhoto logic below
+        saveCompletionData(
+            application, job, currentUser.uid, isCompleted, hasIssues,
+            concerns, "", additionalNotes, progressDialog, dialog
+        )
+
+        /*
+        // TO RE-ENABLE IMAGE UPLOAD LATER:
+        // Upload image if selected, then save completion data
+        if (selectedImageUri != null) {
+            uploadWorkPhoto(selectedImageUri!!) { imageUrl ->
+                saveCompletionData(
+                    application, job, currentUser.uid, isCompleted, hasIssues, 
+                    concerns, imageUrl, additionalNotes, progressDialog, dialog
+                )
+            }
+        } else {
+            saveCompletionData(
+                application, job, currentUser.uid, isCompleted, hasIssues, 
+                concerns, "", additionalNotes, progressDialog, dialog
+            )
+        }
+        */
+    }
+
+    /* IMAGE UPLOAD DISABLED - TO RE-ENABLE LATER, UNCOMMENT THIS FUNCTION
+    private fun uploadWorkPhoto(imageUri: Uri, onSuccess: (String) -> Unit) {
+        val fileName = "work_photos/${UUID.randomUUID()}.jpg"
+        val storageRef = storage.reference.child(fileName)
+
+        storageRef.putFile(imageUri)
+            .addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    onSuccess(downloadUri.toString())
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Failed to upload photo: ${e.message}", Toast.LENGTH_SHORT).show()
+                // Continue without photo
+                onSuccess("")
+            }
+    }
+    */
+
+    private fun saveCompletionData(
+        application: Application,
+        job: Job?,
+        userId: String,
+        isCompleted: Boolean,
+        hasIssues: Boolean,
+        concerns: String,
+        photoUrl: String,
+        additionalNotes: String,
+        progressDialog: AlertDialog,
+        completionDialog: AlertDialog
+    ) {
+        // Get user name
+        firestore.collection("users").document(userId)
+            .get()
+            .addOnSuccessListener { userDoc ->
+                val userName = userDoc.getString("name") ?: "Job Seeker"
+
+                val completion = JobCompletion(
+                    applicationId = application.id,
+                    jobId = application.jobId,
+                    jobTitle = application.jobTitle,
+                    jobSeekerId = userId,
+                    jobSeekerName = userName,
+                    employerId = application.employerId,
+                    employerName = application.employerName,
+                    isCompleted = isCompleted,
+                    hasIssues = hasIssues,
+                    concerns = concerns,
+                    workPhotoUrl = photoUrl,
+                    additionalNotes = additionalNotes,
+                    submittedAt = Timestamp.now(),
+                    reviewedByEmployer = false,
+                    paymentReleased = false
+                )
+
+                firestore.collection("jobCompletions")
+                    .add(completion)
+                    .addOnSuccessListener { docRef ->
+                        // Update application status to "Completed"
+                        firestore.collection("applications").document(application.id)
+                            .update(
+                                mapOf(
+                                    "status" to "Completed",
+                                    "completedAt" to Timestamp.now()
+                                )
+                            )
+                            .addOnSuccessListener {
+                                progressDialog.dismiss()
+                                completionDialog.dismiss()
+                                
+                                Toast.makeText(
+                                    context,
+                                    "Completion submitted successfully! The employer will review it.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                                // Show confirmation
+                                showCompletionConfirmation(isCompleted, hasIssues)
+                            }
+                            .addOnFailureListener { e ->
+                                progressDialog.dismiss()
+                                Toast.makeText(
+                                    context,
+                                    "Error updating application: ${e.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            context,
+                            "Error submitting completion: ${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showCompletionConfirmation(isCompleted: Boolean, hasIssues: Boolean) {
+        val title = if (isCompleted) "Job Completed! ✓" else "Concerns Reported"
+        val message = if (isCompleted) {
+            "Your job completion has been submitted to the employer for review. " +
+            "You will be notified once the employer confirms and releases payment."
+        } else {
+            "Your concerns have been submitted to the employer. " +
+            "They will review your report and contact you to resolve the issues."
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK", null)
+            .show()
+    }
 }
+
 

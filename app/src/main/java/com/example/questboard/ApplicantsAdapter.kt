@@ -82,6 +82,24 @@ class ApplicantsAdapter(
                     btnAccept.visibility = View.GONE
                     btnReject.visibility = View.GONE
                 }
+                "Completed" -> {
+                    tvStatus.text = "⏳ Awaiting Review"
+                    tvStatus.setTextColor(itemView.context.getColor(android.R.color.holo_blue_light))
+                    btnAccept.visibility = View.GONE
+                    btnReject.visibility = View.GONE
+                }
+                "Reviewed" -> {
+                    tvStatus.text = "Reviewed ✓"
+                    tvStatus.setTextColor(itemView.context.getColor(android.R.color.holo_green_dark))
+                    btnAccept.visibility = View.GONE
+                    btnReject.visibility = View.GONE
+                }
+                else -> {
+                    tvStatus.text = application.status
+                    tvStatus.setTextColor(itemView.context.getColor(android.R.color.darker_gray))
+                    btnAccept.visibility = View.GONE
+                    btnReject.visibility = View.GONE
+                }
             }
 
             // Show message if available

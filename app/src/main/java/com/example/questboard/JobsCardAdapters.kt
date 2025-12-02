@@ -146,7 +146,8 @@ class AppliedJobsCardAdapter(
 class ActiveJobsCardAdapter(
     private var applications: MutableList<Application>,
     private val onViewJobClick: (Application) -> Unit,
-    private val onMessageClick: (Application) -> Unit
+    private val onMessageClick: (Application) -> Unit,
+    private val onConfirmCompletionClick: (Application) -> Unit
 ) : RecyclerView.Adapter<ActiveJobsCardAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -157,6 +158,7 @@ class ActiveJobsCardAdapter(
         val tvLocation: TextView = view.findViewById(R.id.tvLocation)
         val tvAcceptedTime: TextView = view.findViewById(R.id.tvAcceptedTime)
         val tvJobDateTime: TextView = view.findViewById(R.id.tvJobDateTime)
+        val btnConfirmCompletion: Button = view.findViewById(R.id.btnConfirmCompletion)
         val btnMessageEmployer: Button = view.findViewById(R.id.btnMessageEmployer)
         val btnViewJob: Button = view.findViewById(R.id.btnViewJob)
     }
@@ -186,6 +188,11 @@ class ActiveJobsCardAdapter(
 
         // Job DateTime - would need to be added to Application model or loaded from job
         holder.tvJobDateTime.text = "Scheduled: Check job details"
+
+        // Confirm Completion Button
+        holder.btnConfirmCompletion.setOnClickListener {
+            onConfirmCompletionClick(application)
+        }
 
         // View Job Button
         holder.btnViewJob.setOnClickListener {
