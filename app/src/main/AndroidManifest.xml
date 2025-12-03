@@ -81,6 +81,13 @@
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.QuestBoard" />
 
+        <!-- Edit Profile Activity -->
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.QuestBoard" />
+
     </application>
 
 </manifest>

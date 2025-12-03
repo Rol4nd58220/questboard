@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -485,6 +486,7 @@ class EmployerApplicantsFragment : Fragment() {
         // Update completion with employer review
         val updates = hashMapOf<String, Any>(
             "reviewedByEmployer" to true,
+            "employerReviewed" to true,
             "employerFeedback" to feedback,
             "employerRating" to rating,
             "paymentMethod" to paymentMethod,
@@ -498,6 +500,7 @@ class EmployerApplicantsFragment : Fragment() {
             .addOnSuccessListener { snapshot ->
                 if (!snapshot.isEmpty) {
                     val docId = snapshot.documents[0].id
+                    val jobSeekerId = snapshot.documents[0].getString("jobSeekerId") ?: ""
 
                     firestore.collection("jobCompletions").document(docId)
                         .update(updates)
@@ -506,16 +509,8 @@ class EmployerApplicantsFragment : Fragment() {
                             firestore.collection("applications").document(application.id)
                                 .update("status", "Reviewed")
                                 .addOnSuccessListener {
-                                    progressDialog.dismiss()
-                                    dialog.dismiss()
-
-                                    Toast.makeText(
-                                        context,
-                                        "Review submitted successfully!",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-
-                                    showReviewConfirmation(rating, feedback)
+                                    // Update job seeker's overall rating
+                                    updateJobSeekerRating(jobSeekerId, progressDialog, dialog, rating, feedback)
                                 }
                                 .addOnFailureListener { e ->
                                     progressDialog.dismiss()
@@ -539,6 +534,88 @@ class EmployerApplicantsFragment : Fragment() {
             .addOnFailureListener { e ->
                 progressDialog.dismiss()
                 Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateJobSeekerRating(
+        jobSeekerId: String,
+        progressDialog: AlertDialog,
+        reviewDialog: AlertDialog,
+        newRating: Float,
+        feedback: String
+    ) {
+        // Calculate the job seeker's new average rating
+        firestore.collection("jobCompletions")
+            .whereEqualTo("jobSeekerId", jobSeekerId)
+            .whereEqualTo("employerReviewed", true)
+            .get()
+            .addOnSuccessListener { completions ->
+                var totalRating = 0.0
+                var reviewCount = 0
+
+                for (doc in completions.documents) {
+                    val rating = doc.getDouble("employerRating")
+                    if (rating != null && rating > 0) {
+                        totalRating += rating
+                        reviewCount++
+                    }
+                }
+
+                val averageRating = if (reviewCount > 0) totalRating / reviewCount else 0.0
+                val jobsCompleted = completions.size()
+
+                // Update user profile with rating statistics
+                val ratingUpdates = hashMapOf<String, Any>(
+                    "averageRating" to averageRating,
+                    "totalReviews" to reviewCount,
+                    "jobsCompleted" to jobsCompleted,
+                    "lastRatingUpdate" to com.google.firebase.Timestamp.now()
+                )
+
+                firestore.collection("users").document(jobSeekerId)
+                    .update(ratingUpdates)
+                    .addOnSuccessListener {
+                        progressDialog.dismiss()
+                        reviewDialog.dismiss()
+
+                        Toast.makeText(
+                            context,
+                            "Review submitted successfully! Job seeker's rating updated.",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        showReviewConfirmation(newRating, feedback)
+                    }
+                    .addOnFailureListener { e ->
+                        // Even if rating update fails, review was saved
+                        progressDialog.dismiss()
+                        reviewDialog.dismiss()
+
+                        Log.e("EmployerApplicants", "Error updating job seeker rating: ${e.message}", e)
+
+                        Toast.makeText(
+                            context,
+                            "Review submitted! (Rating update pending)",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        showReviewConfirmation(newRating, feedback)
+                    }
+            }
+            .addOnFailureListener { e ->
+                // Even if rating calculation fails, review was saved
+                progressDialog.dismiss()
+                reviewDialog.dismiss()
+
+                Log.e("EmployerApplicants", "Error calculating rating: ${e.message}", e)
+
+                Toast.makeText(
+                    context,
+                    "Review submitted! (Rating calculation pending)",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                showReviewConfirmation(newRating, feedback)
             }
     }
 

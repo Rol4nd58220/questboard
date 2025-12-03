@@ -2,6 +2,7 @@ package com.example.questboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,13 +67,33 @@ class EmployerProfileFragment : Fragment() {
     }
 
     private fun logoutUser() {
-        auth.signOut()
+        try {
+            // Sign out from Firebase
+            auth.signOut()
 
-        // Navigate back to login
-        val intent = Intent(requireContext(), LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
+            // Check if fragment is still attached to activity
+            if (!isAdded || activity == null) {
+                return
+            }
+
+            // Navigate back to login
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+
+            // Finish the activity safely
+            activity?.finish()
+        } catch (e: Exception) {
+            Log.e("EmployerProfile", "Error during logout: ${e.message}", e)
+            // Still try to navigate to login even if there's an error
+            try {
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } catch (ex: Exception) {
+                Log.e("EmployerProfile", "Failed to navigate to login: ${ex.message}", ex)
+            }
+        }
     }
 }
 

@@ -62,4 +62,38 @@
     <string name="reject">Reject</string>
     <string name="view_rates">View rates</string>
 
+    <!-- Profile Screen -->
+    <string name="profile_photo">Profile Photo</string>
+    <string name="change_photo">Change Photo</string>
+    <string name="user_name">User Name</string>
+    <string name="email_placeholder">email@example.com</string>
+    <string name="credibility">Credibility</string>
+    <string name="rating_placeholder">0.0</string>
+    <string name="rating_out_of">/5.0</string>
+    <string name="review_count">(%d reviews)</string>
+    <string name="no_reviews">(0 reviews)</string>
+    <string name="jobs_completed">Jobs Completed: %d</string>
+    <string name="rating">Rating</string>
+    <string name="about_me">About Me</string>
+    <string name="no_bio_available">No bio available</string>
+    <string name="location">Location</string>
+    <string name="not_specified">Not specified</string>
+    <string name="documents">Documents</string>
+    <string name="no_documents_uploaded">No documents uploaded</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="logout">Logout</string>
+
+    <!-- Edit Profile Screen -->
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name (Optional)</string>
+    <string name="last_name">Last Name</string>
+    <string name="enter_first_name">Enter your first name</string>
+    <string name="enter_middle_name">Enter your middle name</string>
+    <string name="enter_last_name">Enter your last name</string>
+    <string name="enter_about_me">Tell us about yourself, your skills, and experience</string>
+    <string name="enter_location">Enter your location (e.g., Manila, Philippines)</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="saving">Saving…</string>
+    <string name="cancel">Cancel</string>
+
 </resources>
